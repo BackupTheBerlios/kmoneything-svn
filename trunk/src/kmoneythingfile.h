@@ -62,7 +62,8 @@ public:
   bool delCategory(Q_UINT32 id);
   bool delCategory(QString category);
   QString getCategory(Q_UINT32 id);
-  bool clearCategories();
+  const QStringList &getCategories();
+  void setCategories(const QStringList& categories);
   Q_UINT32 recurrences();
   void addRecurrence(KMoneyThingRecurringTransaction* transaction);
   bool delRecurrence(Q_UINT32 id);

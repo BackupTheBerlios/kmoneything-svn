@@ -99,9 +99,15 @@ QString KMoneyThingFile::getCategory(Q_UINT32 id)
   return mCategories[id];
 }
 
-bool KMoneyThingFile::clearCategories()
+void KMoneyThingFile::setCategories(const QStringList &categories)
 {
-  return mCategories.clear();
+  mCategories.clear();
+  mCategories = categories;
+}
+
+const QStringList& KMoneyThingFile::getCategories()
+{
+  return mCategories;
 }
 
 Q_UINT32 KMoneyThingFile::recurrences()
