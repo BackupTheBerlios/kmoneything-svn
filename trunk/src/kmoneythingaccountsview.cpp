@@ -17,52 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
- 
+
 // $Id$
- 
-#ifndef KMONEYTHINGMAINWIDGET_H
-#define KMONEYTHINGMAINWIDGET_H
 
-#include "kmoneythinghomeview.h"
 #include "kmoneythingaccountsview.h"
-#include "kmoneythingfile.h"
 
-#include <qframe.h>
-#include <kjanuswidget.h>
-
-/**
-@author Fred Emmott
-*/
-class KMoneyThingMainWidget : public KJanusWidget
+KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *name)
+ : QWidget(parent, name)
 {
-  Q_OBJECT
-public:
-  enum Page{
-    homePage,
-    accountsPage,
-    calendarPage,
-    categoriesPage,
-    findPage,
-    transactionsPage
-  };
-private:
-  QFrame* homeFrame;
-  KMoneyThingHomeView* homeView;
-  QFrame* accountsFrame;
-  KMoneyThingAccountsView* accountsView;
-  QFrame* calendarFrame;
-  QFrame* categoriesFrame;
-  QFrame* findFrame;
-  QFrame* transactionsFrame;
-  KMoneyThingFile* currentFile;
-  void setupPages();
-public:
-  void activatePage(KMoneyThingMainWidget::Page page);
-  KMoneyThingMainWidget(QWidget *parent=0, const char *name=0, int face = KJanusWidget::IconList);
+}
 
-  ~KMoneyThingMainWidget();
-public slots:
-  void slotSave();
-};
 
-#endif
+KMoneyThingAccountsView::~KMoneyThingAccountsView()
+{
+}
+
+
+#include "kmoneythingaccountsview.moc"

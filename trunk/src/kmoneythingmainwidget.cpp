@@ -47,6 +47,10 @@ void KMoneyThingMainWidget::setupPages()
   layout->addWidget(homeView);
   
   accountsFrame = addPage(i18n("Accounts"), i18n("Accounts"), DesktopIcon("identity"));
+  layout = new QVBoxLayout(accountsFrame);
+  accountsView = new KMoneyThingAccountsView(accountsFrame);
+  layout->addWidget(accountsView);
+  
   calendarFrame = addPage(i18n("Schedule"), i18n("Schedule"), DesktopIcon("today"));
   categoriesFrame = addPage(i18n("Categories"), i18n("Categories"), DesktopIcon("folder"));
   findFrame = addPage(i18n("Find"), i18n("Find"), DesktopIcon("find"));
