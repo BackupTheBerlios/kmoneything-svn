@@ -20,9 +20,9 @@ KDE_ICON = kmoneything
 bin_PROGRAMS = kmoneything
 
 # the application source, library search path, and link libraries
-kmoneything_SOURCES = main.cpp kmoneything.cpp kmoneythingui.rc kmoneythingmainwidget.cpp
+kmoneything_SOURCES = main.cpp kmoneything.cpp kmoneythingui.rc kmoneythingmainwidget.cpp kmoneythinghomeview.cpp
 kmoneything_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-kmoneything_LDADD = $(LIB_KDEUI)
+kmoneything_LDADD = $(LIB_KHTML) $(LIB_KDEUI)
 
 # this is where the desktop file will go 
 shelldesktopdir = $(kde_appsdir)/Utilities

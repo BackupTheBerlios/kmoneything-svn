@@ -17,24 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "kmoneythingmainwidget.h"
+#ifndef KMONEYTHINGHOMEVIEW_H
+#define KMONEYTHINGHOMEVIEW_H
 
-#include <qlayout.h>
+#include <qwidget.h>
 
-#include <klocale.h>
+#include <khtml_part.h>
+#include <khtmlview.h>
 
-KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name)
- : KJanusWidget(parent, name, KJanusWidget::IconList)
+/**
+@author Fred Emmott
+*/
+class KMoneyThingHomeView : public QWidget
 {
-  homeFrame = addPage(i18n("Home"), i18n("Home"),QPixmap());
-  QVBoxLayout *homeFrameLayout = new QVBoxLayout(homeFrame);
-  homeView = new KMoneyThingHomeView(homeFrame);
-  homeFrameLayout->addWidget(homeView);
-}
+Q_OBJECT
+private:
+  KHTMLPart *khtmlPart;
+public:
+  KMoneyThingHomeView(QWidget *parent = 0, const char *name = 0);
 
+  ~KMoneyThingHomeView();
+};
 
-KMoneyThingMainWidget::~KMoneyThingMainWidget()
-{
-}
-
-#include "kmoneythingmainwidget.moc"
+#endif

@@ -20,6 +20,8 @@
 #ifndef KMONEYTHINGMAINWIDGET_H
 #define KMONEYTHINGMAINWIDGET_H
 
+#include "kmoneythinghomeview.h"
+
 #include <qframe.h>
 #include <kjanuswidget.h>
 
@@ -31,6 +33,7 @@ class KMoneyThingMainWidget : public KJanusWidget
   Q_OBJECT
 private:
   QFrame *homeFrame;
+  KMoneyThingHomeView *homeView;
 public:
   KMoneyThingMainWidget(QWidget *parent=0, const char *name=0);
 

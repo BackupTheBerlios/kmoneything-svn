@@ -17,24 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "kmoneythingmainwidget.h"
+#include "kmoneythinghomeview.h"
 
 #include <qlayout.h>
 
+#include <khtml_part.h>
+#include <khtmlview.h>
 #include <klocale.h>
 
-KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name)
- : KJanusWidget(parent, name, KJanusWidget::IconList)
+KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name)
+ : QWidget(parent, name)
 {
-  homeFrame = addPage(i18n("Home"), i18n("Home"),QPixmap());
-  QVBoxLayout *homeFrameLayout = new QVBoxLayout(homeFrame);
-  homeView = new KMoneyThingHomeView(homeFrame);
-  homeFrameLayout->addWidget(homeView);
+  QHBoxLayout *layout = new QHBoxLayout(this);
+  khtmlPart = new KHTMLPart(this);
+  khtmlPart->openURL("https://laptop.fredemmott.co.uk");
+  layout->addWidget(khtmlPart->view());
 }
 
 
-KMoneyThingMainWidget::~KMoneyThingMainWidget()
+KMoneyThingHomeView::~KMoneyThingHomeView()
 {
 }
 
-#include "kmoneythingmainwidget.moc"
+
+#include "kmoneythinghomeview.moc"
