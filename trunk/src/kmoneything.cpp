@@ -23,22 +23,44 @@
 #include "kmoneything.h"
 #include "kmoneythingmainwidget.h"
 
+#include <kaction.h>
 #include <kmenubar.h>
 #include <kpopupmenu.h>
 #include <kmainwindow.h>
+#include <kmessagebox.h>
 #include <klocale.h>
 
 KMoneyThing::KMoneyThing()
     : KMainWindow( 0, "KMoneyThing" )
 {
-  KPopupMenu *help = helpMenu();
   KMenuBar *menu = menuBar();
-  menu->insertItem(i18n("&Help"), help);
   
+  KPopupMenu *fileMenu = new KPopupMenu;
+  
+  KStdAction::openNew(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
+  KStdAction::open(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
+  KStdAction::openRecent(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
+  fileMenu->insertSeparator();
+  KStdAction::save(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
+  KStdAction::saveAs(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
+  fileMenu->insertSeparator();
+  KStdAction::close(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
+  fileMenu->insertSeparator();
+  KStdAction::quit(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
+    
+  menu->insertItem(i18n("&File"), fileMenu);
+  
+  KPopupMenu *help = helpMenu();
+  menu->insertItem(i18n("&Help"), help);  
   setAutoSaveSettings();
   
   KMoneyThingMainWidget *mainWidget = new KMoneyThingMainWidget(this);
   setCentralWidget(mainWidget);
+}
+
+void KMoneyThing::slotUnimplemented()
+{
+  KMessageBox::sorry(this, i18n("Sorry, this feature is not implemented yet."), "KMoneyThing");
 }
 
 KMoneyThing::~KMoneyThing()

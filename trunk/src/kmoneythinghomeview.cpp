@@ -35,7 +35,7 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name)
   khtmlPart = new KHTMLPart(this);
   khtmlPart->begin();
   khtmlPart->write("<html><body><h1>");
-  khtmlPart->write(i18n("Welcome to KMoneyThing") + "<br>pre0.1: $Rev$");
+  khtmlPart->write(i18n("Welcome to KMoneyThing") + " pre0.1");
   khtmlPart->write("</h1><hr><p>");
   khtmlPart->write(i18n("This application is still under development, and is not yet suitable for general use."));
   khtmlPart->write("</p></body></html>");

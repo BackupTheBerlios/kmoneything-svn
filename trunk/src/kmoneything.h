@@ -47,6 +47,8 @@ public:
     * Default Destructor
     */
   virtual ~KMoneyThing();
+public slots:
+  void slotUnimplemented();
 };
 
 #endif // _KMONEYTHING_H_

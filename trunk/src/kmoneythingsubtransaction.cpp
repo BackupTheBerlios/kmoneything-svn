@@ -22,38 +22,38 @@
  
 #include "kmoneythingsubtransaction.h"
 
-double KMoneyThingTransaction::transactionCurrencyIn()
+double KMoneyThingSubTransaction::transactionCurrencyIn()
 {
   return mTransactionCurrencyIn;
 }
-void KMoneyThingTransaction::setTransactionCurrencyIn(double newVal)
+void KMoneyThingSubTransaction::setTransactionCurrencyIn(double newVal)
 {
   mTransactionCurrencyIn = newVal;
 }
 
-double KMoneyThingTransaction::transactionCurrencyOut()
+double KMoneyThingSubTransaction::transactionCurrencyOut()
 {
   return mTransactionCurrencyOut;
 }
-void KMoneyThingTransaction::setTransactionCurrencyOut(double newVal)
+void KMoneyThingSubTransaction::setTransactionCurrencyOut(double newVal)
 {
   mTransactionCurrencyOut = newVal;
 }
 
-QString KMoneyThingTransaction::name()
+QString KMoneyThingSubTransaction::name()
 {
   return mName;
 }
-void KMoneyThingTransaction::setName(QString newVal)
+void KMoneyThingSubTransaction::setName(QString newVal)
 {
   mName = newVal;
 }
 
-QString KMoneyThingTransaction::category()
+QString KMoneyThingSubTransaction::category()
 {
   return mCategory;
 }
-void KMoneyThingTransaction::setCategory(QString newVal)
+void KMoneyThingSubTransaction::setCategory(QString newVal)
 {
   mCategory = newVal;
 }
