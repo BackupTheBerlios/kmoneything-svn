@@ -24,17 +24,50 @@
 
 #include <qlayout.h>
 
+#include <kiconloader.h>
 #include <klocale.h>
 
-KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name)
- : KJanusWidget(parent, name, KJanusWidget::IconList)
+KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name, int face)
+ : KJanusWidget(parent, name, face)
 {
-  homeFrame = addPage(i18n("Home"), i18n("Home"),QPixmap());
-  QVBoxLayout *homeFrameLayout = new QVBoxLayout(homeFrame);
+  QVBoxLayout *layout;
+
+  homeFrame = addPage(i18n("Home"), i18n("Home"), DesktopIcon("folder_home"));
+  layout = new QVBoxLayout(homeFrame);
   homeView = new KMoneyThingHomeView(homeFrame);
-  homeFrameLayout->addWidget(homeView);
+  layout->addWidget(homeView);
+  
+  accountsFrame = addPage(i18n("Accounts"), i18n("Accounts"), DesktopIcon("identity"));
+  calendarFrame = addPage(i18n("Schedule"), i18n("Schedule"), DesktopIcon("today"));
+  categoriesFrame = addPage(i18n("Categories"), i18n("Categories"), DesktopIcon("folder"));
+  findFrame = addPage(i18n("Find"), i18n("Find"), DesktopIcon("find"));
+  transactionsFrame = addPage(i18n("Transactions"), i18n("Transactions"), DesktopIcon("view_text"));
 }
 
+void KMoneyThingMainWidget::activatePage(KMoneyThingMainWidget::Page page)
+{
+  switch(page)
+  {
+    case homePage:
+      showPage(pageIndex(homeFrame));
+      break;
+    case accountsPage:
+      showPage(pageIndex(accountsFrame));
+      break;
+    case calendarPage:
+      showPage(pageIndex(calendarFrame));
+      break;
+    case categoriesPage:
+      showPage(pageIndex(categoriesFrame));
+      break;
+    case findPage:
+      showPage(pageIndex(findFrame));
+      break;
+    case transactionsPage:
+      showPage(pageIndex(transactionsFrame));
+      break;
+  }
+}
 
 KMoneyThingMainWidget::~KMoneyThingMainWidget()
 {

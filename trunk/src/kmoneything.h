@@ -27,7 +27,10 @@
 #include <config.h>
 #endif
 
+#include "kmoneythingmainwidget.h"
+
 #include <kmainwindow.h>
+#include <kaction.h>
 
 /**
  * @short Application Main Window
@@ -37,6 +40,16 @@
 class KMoneyThing : public KMainWindow
 {
   Q_OBJECT
+private:
+  KMoneyThingMainWidget *mainWidget;
+  KAction *mOpenNewAction;
+  KAction *mOpenAction;
+  KAction *mOpenRecentAction;
+  KAction *mSaveAction;
+  KAction *mSaveAsAction;
+  KAction *mCloseAction;
+  KAction *mQuitAction;
+  void setupActions();
 public:
   /**
     * Default Constructor
@@ -48,6 +61,7 @@ public:
     */
   virtual ~KMoneyThing();
 public slots:
+  void slotSearch();
   void slotUnimplemented();
 };
 

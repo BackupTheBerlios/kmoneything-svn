@@ -31,6 +31,8 @@
 KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name)
  : QWidget(parent, name)
 {
+  KLocale *locale = new KLocale("KMoneyThing");  
+
   QHBoxLayout *layout = new QHBoxLayout(this);
   khtmlPart = new KHTMLPart(this);
   khtmlPart->begin();
@@ -38,7 +40,15 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name)
   khtmlPart->write(i18n("Welcome to KMoneyThing") + " pre0.1");
   khtmlPart->write("</h1><hr><p>");
   khtmlPart->write(i18n("This application is still under development, and is not yet suitable for general use."));
-  khtmlPart->write("</p></body></html>");
+  khtmlPart->write("</p>");
+  khtmlPart->write("<h2>" + i18n("Summary") + "</h2>");
+  khtmlPart->write("<table>");
+  khtmlPart->write("<tr><th>" + i18n("Account") + "</th><th>" + i18n("Balance") + "</th></tr>");
+  //TODO: ACCOUNT SUMMARIES
+  QString totalBalance = locale->formatMoney(0.0);
+  khtmlPart->write("<tr><th>" + i18n("Total:") + "</th><th>" + totalBalance + "</th></tr>");
+  khtmlPart->write("</table>");
+  khtmlPart->write("</body></html>");
   khtmlPart->end();
   layout->addWidget(khtmlPart->view());
 }

@@ -34,11 +34,26 @@
 class KMoneyThingMainWidget : public KJanusWidget
 {
   Q_OBJECT
+public:
+  enum Page{
+    homePage,
+    accountsPage,
+    calendarPage,
+    categoriesPage,
+    findPage,
+    transactionsPage
+  };
 private:
   QFrame *homeFrame;
   KMoneyThingHomeView *homeView;
+  QFrame *accountsFrame;
+  QFrame *calendarFrame;
+  QFrame *categoriesFrame;
+  QFrame *findFrame;
+  QFrame *transactionsFrame;
 public:
-  KMoneyThingMainWidget(QWidget *parent=0, const char *name=0);
+  void activatePage(KMoneyThingMainWidget::Page page);
+  KMoneyThingMainWidget(QWidget *parent=0, const char *name=0, int face = KJanusWidget::IconList);
 
   ~KMoneyThingMainWidget();
 };

@@ -23,8 +23,9 @@
 #include "kmoneything.h"
 #include "kmoneythingmainwidget.h"
 
-#include <kaction.h>
+#include <kstatusbar.h>
 #include <kmenubar.h>
+#include <kaction.h>
 #include <kpopupmenu.h>
 #include <kmainwindow.h>
 #include <kmessagebox.h>
@@ -33,34 +34,71 @@
 KMoneyThing::KMoneyThing()
     : KMainWindow( 0, "KMoneyThing" )
 {
-  KMenuBar *menu = menuBar();
+  toolBar();
+  menuBar();
+  statusBar();
   
-  KPopupMenu *fileMenu = new KPopupMenu;
-  
-  KStdAction::openNew(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
-  KStdAction::open(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
-  KStdAction::openRecent(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
-  fileMenu->insertSeparator();
-  KStdAction::save(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
-  KStdAction::saveAs(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
-  fileMenu->insertSeparator();
-  KStdAction::close(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
-  fileMenu->insertSeparator();
-  KStdAction::quit(this, SLOT(slotUnimplemented()), actionCollection())->plug(fileMenu);
-    
-  menu->insertItem(i18n("&File"), fileMenu);
-  
-  KPopupMenu *help = helpMenu();
-  menu->insertItem(i18n("&Help"), help);  
   setAutoSaveSettings();
   
-  KMoneyThingMainWidget *mainWidget = new KMoneyThingMainWidget(this);
+  mainWidget = new KMoneyThingMainWidget(this);
   setCentralWidget(mainWidget);
+  setupActions();
+  statusBar()->message(i18n("Ready."));
+}
+
+void KMoneyThing::slotSearch()
+{
+  mainWidget->activatePage(KMoneyThingMainWidget::findPage);
 }
 
 void KMoneyThing::slotUnimplemented()
 {
   KMessageBox::sorry(this, i18n("Sorry, this feature is not implemented yet."), "KMoneyThing");
+}
+
+void KMoneyThing::setupActions()
+{
+  toolBar()->setText(i18n("Main Toolbar"));  
+  KPopupMenu *fileMenu = new KPopupMenu;
+  
+  mOpenNewAction = KStdAction::openNew(this, SLOT(slotUnimplemented()), actionCollection());
+  mOpenNewAction->plug(fileMenu);
+  mOpenNewAction->plug(toolBar());
+  
+  mOpenAction = KStdAction::open(this, SLOT(slotUnimplemented()), actionCollection());
+  mOpenAction->plug(fileMenu);
+  mOpenAction->plug(toolBar());
+  
+  mOpenRecentAction = KStdAction::openRecent(this, SLOT(slotUnimplemented()), actionCollection());
+  mOpenRecentAction->plug(fileMenu);
+  
+  fileMenu->insertSeparator();
+  
+  mSaveAction = KStdAction::save(this, SLOT(slotUnimplemented()), actionCollection());
+  mSaveAction->plug(fileMenu);
+  mSaveAction->plug(toolBar());
+  
+  mSaveAsAction = KStdAction::saveAs(this, SLOT(slotUnimplemented()), actionCollection());
+  mSaveAsAction->plug(fileMenu);
+  mSaveAsAction->plug(toolBar());
+  
+  fileMenu->insertSeparator();
+  
+  mCloseAction = KStdAction::close(this, SLOT(slotUnimplemented()), actionCollection());
+  mCloseAction->plug(fileMenu);
+  mCloseAction->plug(toolBar());
+  
+  fileMenu->insertSeparator();
+  
+  mQuitAction = KStdAction::quit(this, SLOT(slotUnimplemented()), actionCollection());
+  mQuitAction->plug(fileMenu);
+    
+  menuBar()->insertItem(i18n("&File"), fileMenu);
+  
+  KPopupMenu *help = helpMenu();
+  menuBar()->insertItem(i18n("&Help"), help);
+  
+  KStdAction::find(this, SLOT(slotSearch()), actionCollection())->plug(toolBar());
 }
 
 KMoneyThing::~KMoneyThing()
