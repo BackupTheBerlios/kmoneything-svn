@@ -45,7 +45,6 @@ public:
     Q_UINT32 transactionID;
   };
 private:
-  Q_UINT32 mId;
   double mBalance;  // not used internally, just potential optimization for account
   bool mSplit;
   QPtrList<KMoneyThingSubTransaction> mSubTransactions;
@@ -63,8 +62,6 @@ private:
   QString mType; // Credit card, direct debit, standing order, etc
   QPtrList<KMoneyThingTransaction::Reference> mReferences;
 public:
-  Q_UINT32 id();
-  void setId(Q_UINT32 newId);
   double balance();
   void setBalance(double newBalance);
   bool split();

@@ -22,15 +22,6 @@
  
 #include "kmoneythingtransaction.h"
 
-Q_UINT32 KMoneyThingTransaction::id()
-{
-  return mId;
-}
-void KMoneyThingTransaction::setId(Q_UINT32 newId)
-{
-  mId = newId;
-}
-
 double KMoneyThingTransaction::balance()
 {
   return mBalance;
