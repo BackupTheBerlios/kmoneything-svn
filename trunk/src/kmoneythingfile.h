@@ -29,6 +29,7 @@
 #include <qptrlist.h>
 #include <qcstring.h>
 #include <qstring.h>
+#include <klocale.h>
 
 /**
 @author Fred Emmott
@@ -36,13 +37,36 @@
 class KMoneyThingFile{
 private:
   QPtrList<KMoneyThingAccount> mAccounts;
-  QString mLocale;
+  KLocale* mLocale;
   QString mName;
   QPtrList<QString> mCategories;
   QPtrList<KMoneyThingRecurringTransaction> mRecurrences;
   QByteArray mDumped;
   bool mDumpDirty;
 public:
+  Q_UINT32 accounts();
+  void addAccount(KMoneyThingAccount* account);
+  bool delAccount(Q_UINT32 id);
+  bool delAccount(KMoneyThingAccount* account);
+  KMoneyThingAccount* getAccount(Q_UINT32 id);
+  KLocale* locale();
+  void setLocale(KLocale* locale);
+  QString name();
+  void setName(QString name);
+  Q_UINT32 categories();
+  void addCategory(QString* category);
+  bool delCategory(Q_UINT32 id);
+  bool delCategory(QString* category);
+  QString* getCategory(Q_UINT32 id);
+  Q_UINT32 recurrences();
+  void addRecurrence(KMoneyThingRecurringTransaction* transaction);
+  bool delRecurrence(Q_UINT32 id);
+  bool delRecurrence(KMoneyThingRecurringTransaction* transaction);
+  KMoneyThingRecurringTransaction* getTransaction(Q_UINT32 id);
+  
+  QByteArray dump();
+  void loadDump(QByteArray savedData);
+
   KMoneyThingFile();
   KMoneyThingFile(QByteArray *savedData);
 
