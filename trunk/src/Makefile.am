@@ -2,7 +2,7 @@
 INCLUDES = $(all_includes)
 
 # these are the headers for your project
-noinst_HEADERS = kmoneything.h
+noinst_HEADERS = kmoneything.h kmoneythingmainwidget.h
 
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
@@ -20,7 +20,7 @@ KDE_ICON = kmoneything
 bin_PROGRAMS = kmoneything
 
 # the application source, library search path, and link libraries
-kmoneything_SOURCES = main.cpp kmoneything.cpp
+kmoneything_SOURCES = main.cpp kmoneything.cpp kmoneythingui.rc kmoneythingmainwidget.cpp
 kmoneything_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kmoneything_LDADD = $(LIB_KDEUI)
 

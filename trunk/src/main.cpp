@@ -18,6 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+ // $id$
+ 
 #include "kmoneything.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
@@ -25,9 +27,9 @@
 #include <klocale.h>
 
 static const char description[] =
-    I18N_NOOP("A KDE KPart Application");
+    I18N_NOOP("A Quicken-style finance manager for KDE");
 
-static const char version[] = "0.1";
+static const char version[] = "Pre-0.1: $Rev$";
 
 static KCmdLineOptions options[] =
 {
@@ -38,8 +40,8 @@ static KCmdLineOptions options[] =
 int main(int argc, char **argv)
 {
     KAboutData about("kmoneything", I18N_NOOP("KMoneyThing"), version, description,
-                     KAboutData::License_GPL, "(C) 2004 Fred Emmott", 0, 0, "mail@fredemmott.co.uk");
-    about.addAuthor( "Fred Emmott", 0, "mail@fredemmott.co.uk" );
+                     KAboutData::License_GPL, "(c) 2004 Fred Emmott", 0, "http://kmoneything.fredemmott.co.uk", "mail@fredemmott.co.uk");
+    about.addAuthor( "Fred Emmott", "Lead Developer", "mail@fredemmott.co.uk", "http://www.fredemmott.co.uk" );
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;

@@ -17,36 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
- 
-// $Id$
+#include "kmoneythingmainwidget.h"
 
-#ifndef _KMONEYTHING_H_
-#define _KMONEYTHING_H_
+#include <qlayout.h>
+#include <qwidgetstack.h>
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include <kiconview.h>
+#include <klocale.h>
 
-#include <kmainwindow.h>
-
-/**
- * @short Application Main Window
- * @author Fred Emmott <mail@fredemmott.co.uk>
- * @version 0.1
- */
-class KMoneyThing : public KMainWindow
+KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name)
+ : QFrame(parent, name)
 {
-  Q_OBJECT
-public:
-  /**
-    * Default Constructor
-    */
-  KMoneyThing();
+  QHBoxLayout *layout = new QHBoxLayout(this);
+  
+  navBar = new KIconView(this);
+  navBar->setMode(KIconView::Select);
+  KIconViewItem *summary = new KIconViewItem(navBar, i18n("Summary"));
+  layout->addWidget(navBar);
+}
 
-  /**
-    * Default Destructor
-    */
-  virtual ~KMoneyThing();
-};
 
-#endif // _KMONEYTHING_H_
+KMoneyThingMainWidget::~KMoneyThingMainWidget()
+{
+}
+
+

@@ -21,14 +21,22 @@
 // $Id$
  
 #include "kmoneything.h"
+#include "kmoneythingmainwidget.h"
 
+#include <kmenubar.h>
+#include <kpopupmenu.h>
 #include <kmainwindow.h>
 #include <klocale.h>
 
 KMoneyThing::KMoneyThing()
     : KMainWindow( 0, "KMoneyThing" )
 {
-
+  KPopupMenu *help = helpMenu();
+  KMenuBar *menu = menuBar();
+  menu->insertItem(i18n("&Help"), help);
+  
+  KMoneyThingMainWidget *mainWidget = new KMoneyThingMainWidget(this);
+  setCentralWidget(mainWidget);
 }
 
 KMoneyThing::~KMoneyThing()
