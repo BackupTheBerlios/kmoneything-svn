@@ -99,6 +99,11 @@ QString KMoneyThingFile::getCategory(Q_UINT32 id)
   return mCategories[id];
 }
 
+bool KMoneyThingFile::clearCategories()
+{
+  return mCategories.clear();
+}
+
 Q_UINT32 KMoneyThingFile::recurrences()
 {
   return mRecurrences.count();
