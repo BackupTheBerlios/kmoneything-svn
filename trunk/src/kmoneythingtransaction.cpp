@@ -51,35 +51,28 @@ void KMoneyThingTransaction::setSplit(bool newVal)
 
 Q_UINT32 KMoneyThingTransaction::subTransactions()
 {
-  return mSubTransactions.size();
+  return mSubTransactions.count();
 }
 
-void KMoneyThingTransaction::addSubTransaction(KMoneyThingSubTransaction transaction)
+void KMoneyThingTransaction::addSubTransaction(KMoneyThingSubTransaction* transaction)
 {
+  if (transaction == 0) return;
   mSubTransactions.append(transaction);
-}
-
-bool KMoneyThingTransaction::replaceSubTransaction(Q_UINT32 trId, KMoneyThingSubTransaction transaction)
-{
-  if (trId >= mSubTransactions.size())
-    return false;
-  mSubTransactions[trId] = transaction;
-  return true;
 }
 
 bool KMoneyThingTransaction::delSubTransaction(Q_UINT32 trId)
 {
-  if (trId >= mSubTransactions.size())
-    return false;
-  mSubTransactions.erase(&mSubTransactions[trId]);
-  return true;
+  return mSubTransactions.remove(trId);
 }
 
-KMoneyThingSubTransaction KMoneyThingTransaction::getSubTransaction(Q_UINT32 trId)
+bool KMoneyThingTransaction::delSubTransaction(KMoneyThingSubTransaction* transaction)
 {
-  if (trId >= mSubTransactions.size())
-    return KMoneyThingSubTransaction();
-  return mSubTransactions[trId];
+  return mSubTransactions.removeRef(transaction);
+}
+
+KMoneyThingSubTransaction* KMoneyThingTransaction::getSubTransaction(Q_UINT32 trId)
+{
+  return mSubTransactions.at(trId);
 }
 
 bool KMoneyThingTransaction::foreign()
@@ -192,35 +185,28 @@ void KMoneyThingTransaction::setType(QString newVal)
 
 Q_UINT32 KMoneyThingTransaction::references()
 {
-  return mReferences.size();
+  return mReferences.count();
 }
 
-void KMoneyThingTransaction::addReference(KMoneyThingTransaction::Reference reference)
+void KMoneyThingTransaction::addReference(KMoneyThingTransaction::Reference* reference)
 {
+  if (reference == 0) return;
   mReferences.append(reference);
-}
-
-bool KMoneyThingTransaction::replaceReference(Q_UINT32 trId, KMoneyThingTransaction::Reference reference)
-{
-  if (trId >= mReferences.size())
-    return false;
-  mReferences[trId] = reference;
-  return true;
 }
 
 bool KMoneyThingTransaction::delReference(Q_UINT32 trId)
 {
-  if (trId >= mReferences.size())
-    return false;
-  mReferences.erase(&mReferences[trId]);
-  return true;
+  return mReferences.remove(trId);
 }
 
-KMoneyThingTransaction::Reference KMoneyThingTransaction::getReference(Q_UINT32 trId)
+bool KMoneyThingTransaction::delReference(KMoneyThingTransaction::Reference* reference)
 {
-  if (trId >= mReferences.size())
-    return KMoneyThingTransaction::Reference();
-  return mReferences[trId];
+  return mReferences.remove(reference);
+}
+
+KMoneyThingTransaction::Reference* KMoneyThingTransaction::getReference(Q_UINT32 trId)
+{
+  return mReferences.at(trId);
 }
 
   

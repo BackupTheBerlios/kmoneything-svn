@@ -27,6 +27,7 @@
 
 #include <qcstring.h>
 #include <qstring.h>
+#include <qvaluevector.h>
 
 /**
 @author Fred Emmott

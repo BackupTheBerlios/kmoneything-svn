@@ -26,7 +26,7 @@
 #include "kmoneythingsubtransaction.h"
 
 #include <qstring.h>
-#include <qvaluevector.h>
+#include <qptrlist.h>
 
 /**
 @author Fred Emmott
@@ -48,7 +48,7 @@ private:
   Q_UINT32 mId;
   double mBalance;  // not used internally, just potential optimization for account
   bool mSplit;
-  QValueVector<KMoneyThingSubTransaction> mSubTransactions;
+  QPtrList<KMoneyThingSubTransaction> mSubTransactions;
   bool mForeign;
   QString mTransactionCurrencyName;
   double mTransactionCurrencyIn;
@@ -61,7 +61,7 @@ private:
   QString mCategory;
   QString mStatementId;
   QString mType; // Credit card, direct debit, standing order, etc
-  QValueVector<KMoneyThingTransaction::Reference> mReferences;
+  QPtrList<KMoneyThingTransaction::Reference> mReferences;
 public:
   Q_UINT32 id();
   void setId(Q_UINT32 newId);
@@ -70,10 +70,10 @@ public:
   bool split();
   void setSplit(bool newVal);
   Q_UINT32 subTransactions();
-  void addSubTransaction(KMoneyThingSubTransaction transaction);
-  bool replaceSubTransaction(Q_UINT32 trId, KMoneyThingSubTransaction transaction);
+  void addSubTransaction(KMoneyThingSubTransaction* transaction);
   bool delSubTransaction(Q_UINT32 trId);
-  KMoneyThingSubTransaction getSubTransaction(Q_UINT32 trId);
+  bool delSubTransaction(KMoneyThingSubTransaction* transaction);
+  KMoneyThingSubTransaction* getSubTransaction(Q_UINT32 trId);
   bool foreign();
   void setForeign(bool isForeign);
   QString transactionCurrencyName();
@@ -99,10 +99,10 @@ public:
   QString type();
   void setType(QString newVal);
   Q_UINT32 references();
-  void addReference(KMoneyThingTransaction::Reference reference);
-  bool replaceReference(Q_UINT32 trId, KMoneyThingTransaction::Reference reference);
+  void addReference(KMoneyThingTransaction::Reference* reference);
   bool delReference(Q_UINT32 trId);
-  KMoneyThingTransaction::Reference getReference(Q_UINT32 trId);
+  bool delReference(KMoneyThingTransaction::Reference* reference);
+  KMoneyThingTransaction::Reference* getReference(Q_UINT32 trId);
     
   KMoneyThingTransaction(Q_UINT32 id = 0);
   ~KMoneyThingTransaction();
