@@ -54,7 +54,7 @@ void KMoneyThing::slotSearch()
 
 void KMoneyThing::slotUnimplemented()
 {
-  KMessageBox::sorry(this, i18n("Sorry, this feature is not implemented yet."), "KMoneyThing");
+  KMessageBox::sorry(this, i18n("Sorry, this feature is not implemented yet."));
 }
 
 void KMoneyThing::setupActions()

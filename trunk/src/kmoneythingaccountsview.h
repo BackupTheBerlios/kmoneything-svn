@@ -25,7 +25,12 @@
 
 #include "kmoneythingfile.h"
 
-#include <qwidget.h>
+#include <qlabel.h>
+
+#include <kcombobox.h>
+#include <kpushbutton.h>
+#include <ktextedit.h>
+#include <klineedit.h>
 
 /**
 @author Fred Emmott
@@ -35,11 +40,27 @@ class KMoneyThingAccountsView : public QWidget
 Q_OBJECT
 private:
   KMoneyThingFile *mCurrentFile;
+  KComboBox* mAccountCombo;
+  KPushButton* mNewAccount;
+  QLabel* mNameLabel;
+  KLineEdit* mName;
+  QLabel* mDescriptionLabel;
+  KTextEdit* mDescription;
+  QLabel* mInstitutionLabel;
+  KLineEdit* mInstitution;
+  QLabel* mNumberLabel;
+  KLineEdit* mNumber;
+  KPushButton* mApply;
+  KPushButton* mRemove;
 public:
-    KMoneyThingAccountsView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *currentFile = 0);
+  KMoneyThingAccountsView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *currentFile = 0);
 
-    ~KMoneyThingAccountsView();
-
+  ~KMoneyThingAccountsView();
+public slots:
+  void slotUnimplemented();
+  void slotRefresh();
+signals:
+  void signalRefresh();
 };
 
 #endif
