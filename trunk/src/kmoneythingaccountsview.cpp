@@ -22,9 +22,12 @@
 
 #include "kmoneythingaccountsview.h"
 
-KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *name)
+KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *name, KMoneyThingFile *currentFile)
  : QWidget(parent, name)
 {
+  currentFile == 0
+    ? mCurrentFile = new KMoneyThingFile
+    : mCurrentFile = currentFile;
 }
 
 

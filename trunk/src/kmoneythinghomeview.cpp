@@ -28,9 +28,13 @@
 #include <khtmlview.h>
 #include <klocale.h>
 
-KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name)
+KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name, KMoneyThingFile* currentFile)
  : QWidget(parent, name)
 {
+  currentFile == 0
+    ? mCurrentFile = new KMoneyThingFile
+    : mCurrentFile = currentFile;
+  
   KLocale *locale = new KLocale("KMoneyThing");  
 
   QHBoxLayout *layout = new QHBoxLayout(this);

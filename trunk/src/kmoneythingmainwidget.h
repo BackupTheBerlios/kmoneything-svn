@@ -54,7 +54,7 @@ private:
   QFrame* categoriesFrame;
   QFrame* findFrame;
   QFrame* transactionsFrame;
-  KMoneyThingFile* currentFile;
+  KMoneyThingFile* mCurrentFile;
   void setupPages();
 public:
   void activatePage(KMoneyThingMainWidget::Page page);

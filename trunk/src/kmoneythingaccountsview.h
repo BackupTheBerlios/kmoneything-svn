@@ -23,6 +23,8 @@
 #ifndef KMONEYTHINGACCOUNTSVIEW_H
 #define KMONEYTHINGACCOUNTSVIEW_H
 
+#include "kmoneythingfile.h"
+
 #include <qwidget.h>
 
 /**
@@ -31,8 +33,10 @@
 class KMoneyThingAccountsView : public QWidget
 {
 Q_OBJECT
+private:
+  KMoneyThingFile *mCurrentFile;
 public:
-    KMoneyThingAccountsView(QWidget *parent = 0, const char *name = 0);
+    KMoneyThingAccountsView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *currentFile = 0);
 
     ~KMoneyThingAccountsView();
 

@@ -23,6 +23,8 @@
 #ifndef KMONEYTHINGHOMEVIEW_H
 #define KMONEYTHINGHOMEVIEW_H
 
+#include "kmoneythingfile.h"
+
 #include <qwidget.h>
 
 #include <khtml_part.h>
@@ -35,9 +37,10 @@ class KMoneyThingHomeView : public QWidget
 {
 Q_OBJECT
 private:
+  KMoneyThingFile* mCurrentFile;
   KHTMLPart *khtmlPart;
 public:
-  KMoneyThingHomeView(QWidget *parent = 0, const char *name = 0);
+  KMoneyThingHomeView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile* currentFile = 0);
 
   ~KMoneyThingHomeView();
 };

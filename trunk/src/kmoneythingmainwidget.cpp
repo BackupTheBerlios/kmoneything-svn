@@ -33,7 +33,7 @@
 KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name, int face)
  : KJanusWidget(parent, name, face)
 {
-  currentFile = new KMoneyThingFile();
+  mCurrentFile = new KMoneyThingFile();
   setupPages();
 }
 
@@ -43,12 +43,12 @@ void KMoneyThingMainWidget::setupPages()
 
   homeFrame = addPage(i18n("Home"), i18n("Home"), DesktopIcon("folder_home"));
   layout = new QVBoxLayout(homeFrame);
-  homeView = new KMoneyThingHomeView(homeFrame);
+  homeView = new KMoneyThingHomeView(homeFrame, 0, mCurrentFile);
   layout->addWidget(homeView);
   
   accountsFrame = addPage(i18n("Accounts"), i18n("Accounts"), DesktopIcon("identity"));
   layout = new QVBoxLayout(accountsFrame);
-  accountsView = new KMoneyThingAccountsView(accountsFrame);
+  accountsView = new KMoneyThingAccountsView(accountsFrame, 0, mCurrentFile);
   layout->addWidget(accountsView);
   
   calendarFrame = addPage(i18n("Schedule"), i18n("Schedule"), DesktopIcon("today"));
@@ -85,7 +85,7 @@ void KMoneyThingMainWidget::activatePage(KMoneyThingMainWidget::Page page)
 void KMoneyThingMainWidget::slotSave()
 {
   // TODO: Write this properly
-  QByteArray dump = qCompress(currentFile->dump());
+  QByteArray dump = qCompress(mCurrentFile->dump());
   QFile file("/tmp/foo2");
   file.open(IO_WriteOnly);
   file.writeBlock(dump.data(), dump.size());
