@@ -20,14 +20,30 @@
 
 // $Id$
 
+#include "kmoneythingcategoriesview.h"
+
 #include <qlayout.h>
 
-#include "kmoneythingcategoriesview.h"
+#include <kiconloader.h>
 
 KMoneyThingCategoriesView::KMoneyThingCategoriesView(QWidget *parent, const char *name, KMoneyThingFile *file)
  : KMoneyThingView(parent, name, file)
 {
   setFile(file);
+  
+  QVBoxLayout *layout = new QVBoxLayout(this, 3);
+  mCategories = new KEditListBox(this,0,0,3);
+  layout->addWidget(mCategories);
+  
+  QHBoxLayout *bottomLayout = new QHBoxLayout(this, 2);
+  layout->addItem(bottomLayout);
+    
+  QSpacerItem *spacer = new QSpacerItem(0,0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+  bottomLayout->addItem(spacer);
+  
+  mApply = new KPushButton(SmallIconSet("ok"), i18n("&Apply"), this);
+  connect(mApply, SIGNAL(clicked()), this, SLOT(slotApply()));
+  bottomLayout->add(mApply);
 }
 
 
