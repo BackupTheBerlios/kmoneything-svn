@@ -106,8 +106,11 @@ void KMoneyThingAccountsView::slotAccountWizard()
 
 void KMoneyThingAccountsView::slotAddAccount(KMoneyThingAccount* account)
 {
+  Q_UINT32 number = mFile->accounts();
   mFile->addAccount(account);
-  setAccount(mFile->accounts() - 1);
+  mAccountCombo->insertItem(account->name());
+  mAccountCombo->setCurrentItem(mAccountCombo->count() - 1);
+  setAccount(number);
 }
 
 void KMoneyThingAccountsView::setFile(KMoneyThingFile *file)
