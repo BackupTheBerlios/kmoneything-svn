@@ -35,6 +35,8 @@ KMoneyThing::KMoneyThing()
   KMenuBar *menu = menuBar();
   menu->insertItem(i18n("&Help"), help);
   
+  setAutoSaveSettings();
+  
   KMoneyThingMainWidget *mainWidget = new KMoneyThingMainWidget(this);
   setCentralWidget(mainWidget);
 }
