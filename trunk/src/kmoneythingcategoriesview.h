@@ -20,17 +20,39 @@
 
 // $Id$
 
+#ifndef KMONEYTHINGCATEGORIESVIEW_H
+#define KMONEYTHINGCATEGORIESVIEW_H
+
 #include "kmoneythingview.h"
+#include "kmoneythingfile.h"
 
-KMoneyThingView::KMoneyThingView(QWidget *parent, const char *name, KMoneyThingFile *file)
- : QWidget(parent, name)
+#include <qstringlist.h>
+
+#include <keditlistbox.h>
+#include <kpushbutton.h>
+#include <kseparator.h>
+
+/**
+@author Fred Emmott
+*/
+class KMoneyThingCategoriesView : public KMoneyThingView
 {
-}
+Q_OBJECT
+private:
+  KMoneyThingFile *mFile;
+  KPushButton *mApply;
+  KEditListBox *mCategories;
+public:
+  virtual void setFile(KMoneyThingFile* file){};
+  virtual void undoChanges(){};
+  virtual void saveChanges(){};
+  KMoneyThingCategoriesView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *file = 0);
 
+  ~KMoneyThingCategoriesView();
+public slots:
+  virtual void slotRefresh(){};
+signals:
+  void undoOrSave(KMoneyThingView *view);
+};
 
-KMoneyThingView::~KMoneyThingView()
-{
-}
-
-
-#include "kmoneythingview.moc"
+#endif

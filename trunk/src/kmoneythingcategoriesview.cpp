@@ -20,17 +20,20 @@
 
 // $Id$
 
-#include "kmoneythingview.h"
+#include <qlayout.h>
 
-KMoneyThingView::KMoneyThingView(QWidget *parent, const char *name, KMoneyThingFile *file)
- : QWidget(parent, name)
+#include "kmoneythingcategoriesview.h"
+
+KMoneyThingCategoriesView::KMoneyThingCategoriesView(QWidget *parent, const char *name, KMoneyThingFile *file)
+ : KMoneyThingView(parent, name, file)
+{
+  setFile(file);
+}
+
+
+KMoneyThingCategoriesView::~KMoneyThingCategoriesView()
 {
 }
 
 
-KMoneyThingView::~KMoneyThingView()
-{
-}
-
-
-#include "kmoneythingview.moc"
+#include "kmoneythingcategoriesview.moc"

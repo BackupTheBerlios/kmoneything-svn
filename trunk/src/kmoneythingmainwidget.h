@@ -26,6 +26,7 @@
 #include "kmoneythingview.h"
 #include "kmoneythinghomeview.h"
 #include "kmoneythingaccountsview.h"
+#include "kmoneythingcategoriesview.h"
 #include "kmoneythingfile.h"
 
 #include <qframe.h>
@@ -51,11 +52,12 @@ public:
   };
 private:
   QFrame* homeFrame;
-  KMoneyThingHomeView* homeView;
+  KMoneyThingHomeView *homeView;
   QFrame* accountsFrame;
-  KMoneyThingAccountsView* accountsView;
+  KMoneyThingAccountsView *accountsView;
   QFrame* calendarFrame;
   QFrame* categoriesFrame;
+  KMoneyThingCategoriesView *categoriesView;
   QFrame* findFrame;
   QFrame* transactionsFrame;
   KMoneyThingFile* mCurrentFile;

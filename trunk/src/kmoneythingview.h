@@ -38,7 +38,7 @@ public:
   virtual void setFile(KMoneyThingFile* file) = 0;
   virtual void undoChanges(){};
   virtual void saveChanges(){};
-  KMoneyThingView(QWidget *parent = 0, const char *name = 0);
+  KMoneyThingView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile* file = 0);
 
   ~KMoneyThingView();
 public slots:

@@ -32,7 +32,7 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <kmoneything></kmoneything>
+        <kmoneything/>
       </runarguments>
     </run>
     <configurations>

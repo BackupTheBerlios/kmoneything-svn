@@ -62,7 +62,14 @@ void KMoneyThingMainWidget::setupPages()
   connect(accountsView, SIGNAL(undoOrSave(KMoneyThingView* )), this, SLOT(slotUndoOrSave(KMoneyThingView* )));
   
   calendarFrame = addPage(i18n("Schedule"), i18n("Schedule"), DesktopIcon("today"));
+  
   categoriesFrame = addPage(i18n("Categories"), i18n("Categories"), DesktopIcon("folder"));
+  layout = new QVBoxLayout(categoriesFrame);
+  categoriesView = new KMoneyThingCategoriesView(categoriesFrame, 0, mCurrentFile);
+  layout->addWidget(categoriesView);
+  connect(this, SIGNAL(signalRefresh()), categoriesView, SLOT(slotRefresh()));
+  connect(categoriesView, SIGNAL(undoOrSave(KMoneyThingView* )), this, SLOT(slotUndoOrSave(KMoneyThingView* )));
+  
   findFrame = addPage(i18n("Find"), i18n("Find"), DesktopIcon("find"));
   transactionsFrame = addPage(i18n("Transactions"), i18n("Transactions"), DesktopIcon("view_text"));
 }
