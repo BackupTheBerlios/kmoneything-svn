@@ -197,7 +197,7 @@ QByteArray KMoneyThingFile::dump()
     stream << (QString) "</account>";
   }
   for (Q_UINT32 cI = 0; cI < categories(); cI++)
-    stream << (QString) "<category>" << *getCategory(cI) << (QString) "</category>";
+    stream << (QString) "<category>" << getCategory(cI) << (QString) "</category>";
   for (Q_UINT32 rI = 0; rI < recurrences(); rI++)
   {
     KMoneyThingRecurringTransaction* transaction = getRecurrence(rI);
