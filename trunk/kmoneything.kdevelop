@@ -61,7 +61,8 @@
   </kdevautoproject>
   <kdevfileview>
     <groups>
-      <group pattern="*.cpp;*.cxx;*.h" name="Sources" />
+      <group pattern="*.h" name="Headers" />
+      <group pattern="*.cpp" name="Sources" />
       <group pattern="*.ui" name="User Interface" />
       <group pattern="*.png" name="Icons" />
       <group pattern="*.po;*.ts" name="Translations" />

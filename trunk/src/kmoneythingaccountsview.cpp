@@ -26,6 +26,7 @@
 #include <qframe.h>
 #include <qlabel.h>
 
+#include <kseparator.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 
@@ -33,7 +34,7 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
  : KMoneyThingView(parent, name)
 {
   QHBoxLayout *hbox;
-  QFrame *seperator;
+  KSeparator *separator;
   
   QVBoxLayout *mainLayout = new QVBoxLayout(this, 7);
   
@@ -48,9 +49,8 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   connect(mNewAccount, SIGNAL(clicked()), this, SLOT(slotAccountWizard()));
   hbox->add(mNewAccount);
   
-  seperator = new QFrame(this);
-  seperator->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-  mainLayout->add(seperator);
+  separator = new KSeparator(this);
+  mainLayout->add(separator);
   
   QGridLayout *grid = new QGridLayout(this, 6, 2);
   grid->setSpacing(hbox->spacing());
@@ -94,9 +94,8 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   grid->addWidget(mDescription, 5, 1);
   connect(mDescription, SIGNAL(textChanged()), this, SLOT(slotSomethingChanged()));
 
-  seperator = new QFrame(this);
-  seperator->setFrameStyle(QFrame::HLine | QFrame::Sunken);
-  mainLayout->add(seperator);
+  separator = new KSeparator(this);
+  mainLayout->add(separator);
   
   hbox = new QHBoxLayout(this, 3);
   mainLayout->addItem(hbox);

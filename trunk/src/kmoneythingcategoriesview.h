@@ -30,7 +30,6 @@
 
 #include <keditlistbox.h>
 #include <kpushbutton.h>
-#include <kseparator.h>
 
 /**
 @author Fred Emmott
