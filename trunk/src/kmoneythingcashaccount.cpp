@@ -23,13 +23,16 @@
 #include "kmoneythingcashaccount.h"
 
 KMoneyThingCashAccount::KMoneyThingCashAccount(QString name, double startingBalance)
- : KMoneyThingAccount()
+ : KMoneyThingAccount(name, startingBalance)
 {
 }
 
+QString KMoneyThingCashAccount::type()
+{
+  return QString("cash");
+}
 
 KMoneyThingCashAccount::~KMoneyThingCashAccount()
 {
 }
-
 

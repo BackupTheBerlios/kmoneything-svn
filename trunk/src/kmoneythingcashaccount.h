@@ -31,37 +31,10 @@
 */
 class KMoneyThingCashAccount : public KMoneyThingAccount
 {
-private:
-  double mBalance;
-  QString mName;
-  QValueVector<KMoneyThingTransaction> mTransactions;
-  double mStartingBalance;
-  QString mDescription;
-  QString mType = "cash";
-  QString mAccountDescription;
 public:
-   double balance();
-   QString name();
-   void setName(QString);
-   Q_UINT32 transactions();
-   bool addTransaction(KMoneyThingTransaction);
-   bool replaceTransaction(Q_UINT32, KMoneyThingTransaction);
-   bool delTransaction(Q_UINT32);
-   KMoneyThingTransaction getTransaction(Q_UINT32);
-   double startingBalance();
-   bool setStartingBalance(double);
-   QString description();
-   void setDescription(QString);
-   QString type();
-   QString accountNumber();  // eg account number and sort code
-   void setAccountNumber(QString);
-   QString accountDescription();  // eg Fred's Barclays Account
-   void setAccountDescription();
-  
+  QString type();
   KMoneyThingCashAccount(QString name = QString(), double startingBalance = 0);
-
-  ~KMoneyThingCashAccount();
-
+  virtual ~KMoneyThingCashAccount();
 };
 
 #endif

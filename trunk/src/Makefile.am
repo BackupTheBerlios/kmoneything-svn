@@ -20,7 +20,7 @@ KDE_ICON = kmoneything
 bin_PROGRAMS = kmoneything
 
 # the application source, library search path, and link libraries
-kmoneything_SOURCES = main.cpp kmoneything.cpp kmoneythingui.rc kmoneythingmainwidget.cpp kmoneythinghomeview.cpp kmoneythingtransaction.cpp kmoneythingsubtransaction.cpp kmoneythingcashaccount.cpp
+kmoneything_SOURCES = main.cpp kmoneything.cpp kmoneythingui.rc kmoneythingmainwidget.cpp kmoneythinghomeview.cpp kmoneythingtransaction.cpp kmoneythingsubtransaction.cpp kmoneythingcashaccount.cpp kmoneythingaccount.cpp
 kmoneything_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kmoneything_LDADD = $(LIB_KHTML) $(LIB_KDEUI)
 

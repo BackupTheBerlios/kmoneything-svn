@@ -32,24 +32,28 @@
 @author Fred Emmott
 */
 class KMoneyThingAccount{
+private:
+  double mBalance;
+  QString mName;
+  QValueVector<KMoneyThingTransaction> mTransactions;
+  double mStartingBalance;
+  QString mDescription;
 public:
-  virtual double balance();
-  virtual QString name();
-  virtual void setName(QString name);
-  virtual Q_UINT32 transactions();
-  virtual bool addTransaction(KMoneyThingTransaction transaction);
-  virtual bool replaceTransaction(Q_UINT32 id, KMoneyThingTransaction transaction);
-  virtual bool delTransaction(Q_UINT32 id);
-  virtual KMoneyThingTransaction getTransaction(Q_UINT32 id);
-  virtual double startingBalance();
-  virtual bool setStartingBalance(double balanace);
-  virtual QString description();
-  virtual void setDescription(QString description);
+  double balance();
+  QString name();
+   void setName(QString name);
+  Q_UINT32 transactions();
+  bool addTransaction(KMoneyThingTransaction transaction);
+  bool replaceTransaction(Q_UINT32 id, KMoneyThingTransaction transaction);
+  bool delTransaction(Q_UINT32 id);
+  KMoneyThingTransaction getTransaction(Q_UINT32 id);
+  double startingBalance();
+  void setStartingBalance(double balance);
+  QString description();
+  void setDescription(QString description);
   virtual QString type() = 0;
-  virtual QString accountNumber();  // eg account number and sort code
-  virtual void setAccountNumber(QString number);
-  virtual QString accountDescription();  // eg Fred's Barclays Account
-  virtual void setAccountDescription();
+  QString accountNumber();  // eg account number and sort code
+  void setAccountNumber(QString number);
 
   KMoneyThingAccount(QString name = QString(), double startingBalance = 0);
   virtual ~KMoneyThingAccount();
