@@ -88,7 +88,7 @@ void KMoneyThingMainWidget::activatePage(KMoneyThingMainWidget::Page page)
 void KMoneyThingMainWidget::slotSave()
 {
   // TODO: Write this properly
-  QByteArray dump = qCompress(mCurrentFile->dump());
+  QByteArray dump = mCurrentFile->dump();
   QFile file("/tmp/foo");
   file.open(IO_WriteOnly);
   QDataStream stream(&file);
@@ -114,7 +114,7 @@ void KMoneyThingMainWidget::slotOpen()
   }
   stream >> dump;
   file.close();
-  mCurrentFile->loadDump(qUncompress(dump));
+  mCurrentFile->loadDump(dump);
   KMessageBox::information(this, "Loaded from /tmp/foo");
   
   emit signalRefresh();

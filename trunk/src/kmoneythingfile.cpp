@@ -131,108 +131,108 @@ QByteArray KMoneyThingFile::dump()
   QDataStream stream(output, IO_WriteOnly);
   
   stream << (QString) "KMoneyThing Document" << (QString) "pre1_draft";
-  stream << "<name>" << mName << "</name>";
-  stream << "<locale>" << mLocale << "</locale>";
+  stream << (QString) "<name>" << mName << (QString) "</name>";
+  stream << (QString) "<locale>" << mLocale << (QString) "</locale>";
   for (Q_UINT32 aI = 0; aI < accounts(); aI++)
   {
     KMoneyThingAccount* account = getAccount(aI);
-    stream << "<account>";
-    stream << "<type>" << account->type() << "</type>";
-    stream << "<name>" << account->name() << "</name>";
-    stream << "<description>" << account->description() << "</description>";
-    stream << "<accountNumber>" << account->accountNumber() << "</accountNumber>";
-    stream << "<institution>" << account->institution() << "</institution>";
-    stream << "<locale>" << account->locale() << "</locale>";
-    stream << "<balance>" << account->balance() << "</balance>";
-    stream << "<startingBalance>" << account->startingBalance() << "</startingBalance>";
+    stream << (QString) "<account>";
+    stream << (QString) "<type>" << account->type() << (QString) "</type>";
+    stream << (QString) "<name>" << account->name() << (QString) "</name>";
+    stream << (QString) "<description>" << account->description() << (QString) "</description>";
+    stream << (QString) "<accountNumber>" << account->accountNumber() << (QString) "</accountNumber>";
+    stream << (QString) "<institution>" << account->institution() << (QString) "</institution>";
+    stream << (QString) "<locale>" << account->locale() << (QString) "</locale>";
+    stream << (QString) "<balance>" << account->balance() << (QString) "</balance>";
+    stream << (QString) "<startingBalance>" << account->startingBalance() << (QString) "</startingBalance>";
     for (Q_UINT32 tI = 0; tI < account->transactions(); tI++)
     {
       KMoneyThingTransaction* transaction = account->getTransaction(tI);
-      stream << "<transaction>";
-      stream << "<name>" << transaction->name() << "</name>";
-      stream << "<type>" << transaction->type() << "</type>";
-      stream << "<category>" << transaction->category() << "</category>";
-      stream << "<payee>" << transaction->payee() << "</payee>";
-      stream << "<state>" << transaction->state() << "</state>";
-      stream << "<statement>" << transaction->statementId() << "</statement>";
-      stream << "<split>" << transaction->split() << "</split>";
-      stream << "<foreign>" << transaction->foreign() << "</foreign>";
-      stream << "<exRate>" << transaction->exchangeRate() << "</exRate>";
-      stream << "<accCurIn>" << transaction->accountCurrencyIn() << "</accCurIn>";
-      stream << "<accCurOut>" << transaction->accountCurrencyOut() << "</accCurOut>";
-      stream << "<trCurIn>" << transaction->transactionCurrencyIn() << "</trCurIn>";
-      stream << "<trCurOut>" << transaction->transactionCurrencyOut() << "</trCurOut>";
-      stream << "<trCurName>" << transaction->transactionCurrencyName() << "</trCurName>";
+      stream << (QString) "<transaction>";
+      stream << (QString) "<name>" << transaction->name() << (QString) "</name>";
+      stream << (QString) "<type>" << transaction->type() << (QString) "</type>";
+      stream << (QString) "<category>" << transaction->category() << (QString) "</category>";
+      stream << (QString) "<payee>" << transaction->payee() << (QString) "</payee>";
+      stream << (QString) "<state>" << transaction->state() << (QString) "</state>";
+      stream << (QString) "<statement>" << transaction->statementId() << (QString) "</statement>";
+      stream << (QString) "<split>" << transaction->split() << (QString) "</split>";
+      stream << (QString) "<foreign>" << transaction->foreign() << (QString) "</foreign>";
+      stream << (QString) "<exRate>" << transaction->exchangeRate() << (QString) "</exRate>";
+      stream << (QString) "<accCurIn>" << transaction->accountCurrencyIn() << (QString) "</accCurIn>";
+      stream << (QString) "<accCurOut>" << transaction->accountCurrencyOut() << (QString) "</accCurOut>";
+      stream << (QString) "<trCurIn>" << transaction->transactionCurrencyIn() << (QString) "</trCurIn>";
+      stream << (QString) "<trCurOut>" << transaction->transactionCurrencyOut() << (QString) "</trCurOut>";
+      stream << (QString) "<trCurName>" << transaction->transactionCurrencyName() << (QString) "</trCurName>";
       for (Q_UINT32 stI = 0; stI < transaction->subTransactions(); stI++)
       {
         KMoneyThingSubTransaction* subTransaction = transaction->getSubTransaction(stI);
-        stream << "<subTransaction>";
-        stream << "<name>" << subTransaction->name() << "</name>";
-        stream << "<category>" << subTransaction->category() << "</category>";
-        stream << "<trCurIn>" << subTransaction->transactionCurrencyIn() << "</trCurIn>";
-        stream << "<trCurOut>" << subTransaction->transactionCurrencyOut() << "</trCurOut>";
-        stream << "</subTransaction>";
+        stream << (QString) "<subTransaction>";
+        stream << (QString) "<name>" << subTransaction->name() << (QString) "</name>";
+        stream << (QString) "<category>" << subTransaction->category() << (QString) "</category>";
+        stream << (QString) "<trCurIn>" << subTransaction->transactionCurrencyIn() << (QString) "</trCurIn>";
+        stream << (QString) "<trCurOut>" << subTransaction->transactionCurrencyOut() << (QString) "</trCurOut>";
+        stream << (QString) "</subTransaction>";
       }
       for (Q_UINT32 rI = 0; rI < transaction->references(); rI++)
       {
         KMoneyThingTransaction::Reference* reference = transaction->getReference(rI);
-        stream << "<reference>";
-        stream << "<refAccount>" << reference->accountName << "</refAccount>";
-        stream << "<refTransaction>" << reference->transactionID << "</refTransaction>";
-        stream << "</reference>";
+        stream << (QString) "<reference>";
+        stream << (QString) "<refAccount>" << reference->accountName << (QString) "</refAccount>";
+        stream << (QString) "<refTransaction>" << reference->transactionID << (QString) "</refTransaction>";
+        stream << (QString) "</reference>";
       }
-      stream << "</transaction>";
+      stream << (QString) "</transaction>";
     }
-    stream << "</account>";
+    stream << (QString) "</account>";
   }
   for (Q_UINT32 cI = 0; cI < categories(); cI++)
-    stream << "<category>" << *getCategory(cI) << "</category>";
+    stream << (QString) "<category>" << *getCategory(cI) << (QString) "</category>";
   for (Q_UINT32 rI = 0; rI < recurrences(); rI++)
   {
     KMoneyThingRecurringTransaction* transaction = getRecurrence(rI);
-    stream << "<recurrence>";
+    stream << (QString) "<recurrence>";
     // If KMoneyThingTransaction is changed, copy its new code from above,
     // overwriting from ***HERE*** ...
-    stream << "<name>" << transaction->name() << "</name>";
-    stream << "<type>" << transaction->type() << "</type>";
-    stream << "<category>" << transaction->category() << "</category>";
-    stream << "<state>" << transaction->state() << "</state>";
-    stream << "<statement>" << transaction->statementId() << "</statement>";
-    stream << "<split>" << transaction->split() << "</split>";
-    stream << "<foreign>" << transaction->foreign() << "</foreign>";
-    stream << "<exRate>" << transaction->exchangeRate() << "</exRate>";
-    stream << "<accCurIn>" << transaction->accountCurrencyIn() << "</accCurIn>";
-    stream << "<accCurOut>" << transaction->accountCurrencyOut() << "</accCurOut>";
-    stream << "<trCurIn>" << transaction->transactionCurrencyIn() << "</trCurIn>";
-    stream << "<trCurOut>" << transaction->transactionCurrencyOut() << "</trCurOut>";
-    stream << "<trCurName>" << transaction->transactionCurrencyName() << "</trCurName>";
+    stream << (QString) "<name>" << transaction->name() << (QString) "</name>";
+    stream << (QString) "<type>" << transaction->type() << (QString) "</type>";
+    stream << (QString) "<category>" << transaction->category() << (QString) "</category>";
+    stream << (QString) "<state>" << transaction->state() << (QString) "</state>";
+    stream << (QString) "<statement>" << transaction->statementId() << (QString) "</statement>";
+    stream << (QString) "<split>" << transaction->split() << (QString) "</split>";
+    stream << (QString) "<foreign>" << transaction->foreign() << (QString) "</foreign>";
+    stream << (QString) "<exRate>" << transaction->exchangeRate() << (QString) "</exRate>";
+    stream << (QString) "<accCurIn>" << transaction->accountCurrencyIn() << (QString) "</accCurIn>";
+    stream << (QString) "<accCurOut>" << transaction->accountCurrencyOut() << (QString) "</accCurOut>";
+    stream << (QString) "<trCurIn>" << transaction->transactionCurrencyIn() << (QString) "</trCurIn>";
+    stream << (QString) "<trCurOut>" << transaction->transactionCurrencyOut() << (QString) "</trCurOut>";
+    stream << (QString) "<trCurName>" << transaction->transactionCurrencyName() << (QString) "</trCurName>";
     for (Q_UINT32 stI = 0; stI < transaction->subTransactions(); stI++)
     {
       KMoneyThingSubTransaction* subTransaction = transaction->getSubTransaction(stI);
-      stream << "<subTransaction>";
-      stream << "<name>" << subTransaction->name() << "</name>";
-      stream << "<category>" << subTransaction->category() << "</category>";
-      stream << "<trCurIn>" << subTransaction->transactionCurrencyIn() << "</trCurIn>";
-      stream << "<trCurOut>" << subTransaction->transactionCurrencyOut() << "</trCurOut>";
-      stream << "</subTransaction>";
+      stream << (QString) "<subTransaction>";
+      stream << (QString) "<name>" << subTransaction->name() << (QString) "</name>";
+      stream << (QString) "<category>" << subTransaction->category() << (QString) "</category>";
+      stream << (QString) "<trCurIn>" << subTransaction->transactionCurrencyIn() << (QString) "</trCurIn>";
+      stream << (QString) "<trCurOut>" << subTransaction->transactionCurrencyOut() << (QString) "</trCurOut>";
+      stream << (QString) "</subTransaction>";
     }
     for (Q_UINT32 rI = 0; rI < transaction->references(); rI++)
     {
       KMoneyThingTransaction::Reference* reference = transaction->getReference(rI);
-      stream << "<reference>";
-      stream << "<refAccount>" << reference->accountName << "</refAccount>";
-      stream << "<refTransaction>" << reference->transactionID << "</refTransaction>";
-      stream << "</reference>";
+      stream << (QString) "<reference>";
+      stream << (QString) "<refAccount>" << reference->accountName << (QString) "</refAccount>";
+      stream << (QString) "<refTransaction>" << reference->transactionID << (QString) "</refTransaction>";
+      stream << (QString) "</reference>";
     }
     // ... to ***HERE***
-    stream << "<recurrency>" << transaction->recurrence() << "</recurrency>";
-    stream << "<xDays>" << transaction->xDays() << "</xDays>";
-    stream << "<firstDate>" << transaction->firstDate() << "</firstDate>";
-    stream << "<daysOn>";
+    stream << (QString) "<recurrency>" << transaction->recurrence() << (QString) "</recurrency>";
+    stream << (QString) "<xDays>" << transaction->xDays() << (QString) "</xDays>";
+    stream << (QString) "<firstDate>" << transaction->firstDate() << (QString) "</firstDate>";
+    stream << (QString) "<daysOn>";
     for (char i = 0; i < 7; i++)
       stream << transaction->isDayOn(i);
-    stream << "</daysOn>";
-    stream << "</recurrence>";
+    stream << (QString) "</daysOn>";
+    stream << (QString) "</recurrence>";
   }
   
   stream.device()->close();
