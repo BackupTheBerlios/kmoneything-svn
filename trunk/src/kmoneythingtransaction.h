@@ -101,7 +101,7 @@ public:
   bool delReference(KMoneyThingTransaction::Reference* reference);
   KMoneyThingTransaction::Reference* getReference(Q_UINT32 trId);
     
-  KMoneyThingTransaction(Q_UINT32 id = 0);
+  KMoneyThingTransaction();
   ~KMoneyThingTransaction();
 };
 

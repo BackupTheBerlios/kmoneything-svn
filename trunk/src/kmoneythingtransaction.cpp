@@ -201,9 +201,8 @@ KMoneyThingTransaction::Reference* KMoneyThingTransaction::getReference(Q_UINT32
 }
 
   
-KMoneyThingTransaction::KMoneyThingTransaction(Q_UINT32 Id)
+KMoneyThingTransaction::KMoneyThingTransaction()
 {
-  mId = Id;
 }
 
 KMoneyThingTransaction::~KMoneyThingTransaction()
