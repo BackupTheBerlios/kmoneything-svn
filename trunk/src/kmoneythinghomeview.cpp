@@ -57,12 +57,15 @@ void KMoneyThingHomeView::doHTML()
   khtmlPart->write("<table>");
   khtmlPart->write("<tr><th>" + i18n("Account") + "</th><th>" + i18n("Balance") + "</th></tr>");
   // TODO: International accounts
+  // TODO: Adding up balances with suport for internationalisation
   for (Q_UINT32 i = 0; i < mCurrentFile->accounts(); i++)
   {
+    locale->setCountry(mCurrentFile->getAccount(i)->locale());
     QString accountName = mCurrentFile->getAccount(i)->name();
-    QString accountBalance = mCurrentFile->getAccount(i)->name();
+    QString accountBalance = locale->formatMoney(mCurrentFile->getAccount(i)->balance());
     khtmlPart->write(QString("<tr><td>%1</td><td>%2</td></tr>").arg(accountName).arg(accountBalance));
   }
+  locale->setCountry(mCurrentFile->locale());
   QString totalBalance = locale->formatMoney(0.0);
   khtmlPart->write("<tr><th>" + i18n("Total:") + "</th><th>" + totalBalance + "</th></tr>");
   khtmlPart->write("</table>");

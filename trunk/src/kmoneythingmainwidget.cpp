@@ -92,6 +92,7 @@ void KMoneyThingMainWidget::activatePage(KMoneyThingMainWidget::Page page)
 
 void KMoneyThingMainWidget::slotSave()
 {
+  KTempFile temp;
   QString fileName = mCurrentFile->kurl().path();
   
   if (fileName == "")
@@ -102,12 +103,11 @@ void KMoneyThingMainWidget::slotSave()
   
   if (!mCurrentFile->kurl().isLocalFile())
   {
-    KTempFile temp;
     fileName = temp.name();
   }
   
   setStatus(i18n("Saving file..."));
-  QByteArray dump = mCurrentFile->dump();
+  QByteArray dump = qCompress(mCurrentFile->dump());
   QFile file(fileName);
   file.open(IO_WriteOnly);
   QDataStream stream(&file);
@@ -116,10 +116,12 @@ void KMoneyThingMainWidget::slotSave()
   
   if (!mCurrentFile->kurl().isLocalFile())
   {
-    setStatus(i18n("Uploading..."));
+    setStatus(i18n("Uploading file..."));
     if (!KIO::NetAccess::upload(fileName, mCurrentFile->kurl(), this))
       KMessageBox::error(this, i18n("Failed to upload file."));
   }
+  
+  temp.unlink();
   
   setStatus(i18n("Ready."));
 }
@@ -135,10 +137,19 @@ void KMoneyThingMainWidget::slotSaveAs()
 
 void KMoneyThingMainWidget::slotOpen()
 {
-  //TODO: Write this properly
+  QString fileName;
+  KURL kurl = KFileDialog::getOpenURL(0, i18n("*.kmt|KMoneyThing files (*.kmt)"), this);
+  if (kurl.path() == "")
+    return;
+  mCurrentFile->setKurl(kurl);
+
+  setStatus(i18n("Downloading file..."));
+  KIO::NetAccess::download(kurl, fileName, this);
+  
+  setStatus(i18n("Reading file..."));
   QByteArray dump;
   QString temp;
-  QFile file("/tmp/foo");
+  QFile file(fileName);
   file.open(IO_ReadOnly);
   QDataStream stream(&file);
   
@@ -146,12 +157,18 @@ void KMoneyThingMainWidget::slotOpen()
   if (temp != "KMoneyThingFile")
   {
     KMessageBox::error(this, i18n("Unknown file format: %1").arg(temp));
+    file.close();
+    KIO::NetAccess::removeTempFile(fileName);
+    setStatus(i18n("Ready."));
     return;
   }
   stream >> dump;
   file.close();
-  mCurrentFile->loadDump(dump);
-  KMessageBox::information(this, "Loaded from /tmp/foo");
+  KIO::NetAccess::removeTempFile(fileName);
+  
+  setStatus(i18n("Parsing file..."));
+  mCurrentFile->loadDump(qUncompress(dump));
+  setStatus(i18n("Ready."));
   
   emit signalRefresh();
 }

@@ -86,12 +86,6 @@ void KMoneyThing::setupActions()
   
   fileMenu->insertSeparator();
   
-  mCloseAction = KStdAction::close(this, SLOT(slotUnimplemented()), actionCollection());
-  mCloseAction->plug(fileMenu);
-  mCloseAction->plug(toolBar());
-  
-  fileMenu->insertSeparator();
-  
   mQuitAction = KStdAction::quit(this, SLOT(slotUnimplemented()), actionCollection());
   mQuitAction->plug(fileMenu);
     

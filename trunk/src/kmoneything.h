@@ -47,7 +47,6 @@ private:
   KAction *mOpenRecentAction;
   KAction *mSaveAction;
   KAction *mSaveAsAction;
-  KAction *mCloseAction;
   KAction *mQuitAction;
   void setupActions();
 public:
