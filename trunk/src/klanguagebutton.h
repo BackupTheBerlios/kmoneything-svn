@@ -48,7 +48,6 @@ class KLanguageButtonPrivate;
 class KLanguageButton : public QWidget
 {
   Q_OBJECT
-
 public:
   /**
    * Constructs a combobox widget with parent parent called name. 

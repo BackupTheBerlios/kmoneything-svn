@@ -84,7 +84,7 @@ QString KMoneyThingAccount::description()
   return mDescription;
 }
 
-void KMoneyThingAccount::setDescription(QString description)
+void KMoneyThingAccount::setDescription(const QString &description)
 {
   mDescription = description;
 }
@@ -94,7 +94,7 @@ QString KMoneyThingAccount::accountNumber()
   return mAccountNumber;
 }
 
-void KMoneyThingAccount::setAccountNumber(QString number)
+void KMoneyThingAccount::setAccountNumber(const QString &number)
 {
   mAccountNumber = number;
   return;
@@ -105,10 +105,20 @@ QString KMoneyThingAccount::institution()
   return mInstitution;
 }
 
-void KMoneyThingAccount::setInstitution(QString institution)
+void KMoneyThingAccount::setInstitution(const QString &institution)
 {
   mInstitution = institution;
   return;
+}
+
+QString KMoneyThingAccount::locale()
+{
+  return mLocale;
+}
+
+void KMoneyThingAccount::setLocale(const QString &locale)
+{
+  mLocale = locale;
 }
 
 KMoneyThingAccount::~ KMoneyThingAccount()

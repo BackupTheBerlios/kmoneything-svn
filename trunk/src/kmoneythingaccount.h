@@ -41,6 +41,7 @@ private:
   QString mDescription;
   QString mAccountNumber;
   QString mInstitution;
+  QString mLocale;
 public:
   double balance();
   QString name();
@@ -53,12 +54,14 @@ public:
   double startingBalance();
   void setStartingBalance(double balance);
   QString description();
-  void setDescription(QString description);
+  void setDescription(const QString &description);
   virtual QString type() = 0;
   QString accountNumber();  // eg account number and sort code
-  void setAccountNumber(QString number);
+  void setAccountNumber(const QString &number);
   QString institution();
-  void setInstitution(QString institution);
+  void setInstitution(const QString &institution);
+  QString locale();
+  void setLocale(const QString &locale);
 
   KMoneyThingAccount(QString name = QString(), double startingBalance = 0);
   virtual ~KMoneyThingAccount();

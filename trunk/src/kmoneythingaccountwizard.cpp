@@ -22,6 +22,8 @@
 
 #include "kmoneythingaccountwizard.h"
 
+#include "kmoneythingcashaccount.h"
+
 #include <qlabel.h>
 #include <qhbox.h>
 
@@ -29,13 +31,16 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-KMoneyThingAccountWizard::KMoneyThingAccountWizard(QWidget *parent, const char *name)
+KMoneyThingAccountWizard::KMoneyThingAccountWizard(QWidget *parent, const char *name, KMoneyThingFile *currentFile)
  : KWizard(parent, name, true)
 {
+  mFile = currentFile;
   setupWelcomePage();
   setupStandardInfoPage();
   setupExtendedInfoPage();
   setupFinishedPage();
+  
+  connect(this, SIGNAL(selected(const QString& )), this, SLOT(pageChanged(const QString& )));
 }
 
 void KMoneyThingAccountWizard::setupWelcomePage()
@@ -60,10 +65,12 @@ void KMoneyThingAccountWizard::setupStandardInfoPage()
   label->setBuddy(mType);
   mType->insertItem(i18n("Cash"));
   mType->setCurrentItem(0);
+  connect(mType, SIGNAL(activated(const QString& )), this, SLOT(typeChanged(const QString& )));
   
   label = new QLabel(i18n("N&ame: "), standardInfoPage);
   mName = new KLineEdit(standardInfoPage);
   label->setBuddy(mName);
+  connect(mName, SIGNAL(textChanged(const QString& )), this, SLOT(nameChanged(const QString& )));
   
   label = new QLabel(i18n("&Description: "), standardInfoPage);
   mDescription = new KTextEdit(standardInfoPage);
@@ -73,10 +80,11 @@ void KMoneyThingAccountWizard::setupStandardInfoPage()
   mLocale = new KLanguageButton(standardInfoPage);
   label->setBuddy(mLocale);
   KMoneyThingUtils::loadCountryList(mLocale);
-  mLocale->setCurrentItem(KGlobal::locale()->country()); // TODO: make a slot to call mStartingBalance->set{Prefix|Precision}();
+  mLocale->setCurrentItem(KGlobal::locale()->country());
+  connect(mLocale, SIGNAL(activated(const QString& )), this, SLOT(localeChanged(const QString& )));
   
   addPage(standardInfoPage, i18n("Basic Information"));
-  setNextEnabled(standardInfoPage, false); // TODO: can't advance until account name is checked to != "" and to be unique
+  setNextEnabled(standardInfoPage, false);
   setHelpEnabled(standardInfoPage, false);
 }
 
@@ -88,15 +96,18 @@ void KMoneyThingAccountWizard::setupExtendedInfoPage()
   
   label = new QLabel(i18n("&Starting Balance: "), extendedInfoPage);
   mStartingBalance = new KDoubleNumInput(extendedInfoPage);
+  mStartingBalance->setPrefix(KGlobal::locale()->currencySymbol());
   label->setBuddy(mStartingBalance);
   
   label = new QLabel(i18n("&Institution: "), extendedInfoPage);
   mInstitution = new KLineEdit(extendedInfoPage);
   label->setBuddy(mInstitution);
+  mInstitution->setEnabled(false);
   
   label = new QLabel(i18n("A&ccount Number: "), extendedInfoPage);
   mAccountNumber = new KLineEdit(extendedInfoPage);
   label->setBuddy(mAccountNumber);
+  mAccountNumber->setEnabled(false);
   
   addPage(extendedInfoPage, i18n("Extended Information"));
   setNextEnabled(extendedInfoPage, true);
@@ -113,6 +124,72 @@ void KMoneyThingAccountWizard::setupFinishedPage()
   addPage(finishedPage, i18n("Finished!"));
   setFinishEnabled(finishedPage, true);
   setHelpEnabled(finishedPage, false);
+}
+
+void KMoneyThingAccountWizard::nameChanged(const QString &text)
+{
+  if (text == "")
+  {
+    setNextEnabled(standardInfoPage, false);
+    return;
+  }
+  
+  for (Q_UINT32 i = 0; i < mFile->accounts(); i++)
+    if (text == mFile->getAccount(i)->name())
+    {
+      setNextEnabled(standardInfoPage, false);
+      return;
+    }
+  
+  setNextEnabled(standardInfoPage, true);
+}
+
+void KMoneyThingAccountWizard::localeChanged(const QString &id)
+{
+  KLocale locale("KMyMoney");
+  locale.setCountry(id);
+  mStartingBalance->setPrefix(locale.currencySymbol());
+}
+
+void KMoneyThingAccountWizard::pageChanged(const QString &title)
+{
+  // TODO: set focus appropriately
+  if (title == QWizard::title(standardInfoPage))
+    nameChanged(mName->text());
+}
+
+void KMoneyThingAccountWizard::typeChanged(const QString &type)
+{
+  if (type != i18n("Cash"))
+  {
+    mInstitution->setEnabled(false);
+    mAccountNumber->setEnabled(false);
+  }
+  else
+  {
+    mInstitution->setEnabled(true);
+    mAccountNumber->setEnabled(true);
+  }
+}
+
+void KMoneyThingAccountWizard::accept()
+{
+  KMoneyThingAccount *newAccount;
+  
+  if (mType->currentText() == i18n("Cash"))
+    newAccount = new KMoneyThingCashAccount();
+  else
+  {
+    KMessageBox::error(this, i18n("Unknown account type: %1").arg(mType->currentText()));
+  }
+  newAccount->setAccountNumber(mAccountNumber->text());
+  newAccount->setDescription(mDescription->text());
+  newAccount->setInstitution(mInstitution->text());
+  newAccount->setLocale(mLocale->current());
+  newAccount->setName(mName->text());
+  newAccount->setStartingBalance(mStartingBalance->value());
+  emit finished(newAccount);
+  QDialog::accept();
 }
 
 KMoneyThingAccountWizard::~KMoneyThingAccountWizard()

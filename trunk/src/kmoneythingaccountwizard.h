@@ -23,7 +23,7 @@
 #ifndef KMONEYTHINGACCOUNTWIZARD_H
 #define KMONEYTHINGACCOUNTWIZARD_H
 
-#include "kmoneythingaccount.h"
+#include "kmoneythingfile.h"
 
 #include "klanguagebutton.h"
 #include "kmoneythingutils.h"
@@ -47,6 +47,8 @@ class KMoneyThingAccountWizard : public KWizard
 {
 Q_OBJECT
 private:
+  KMoneyThingFile *mFile;
+  
   QVBox* welcomePage;
   QGrid* standardInfoPage;
   QGrid* extendedInfoPage;
@@ -68,9 +70,15 @@ private:
   void setupExtendedInfoPage();
   void setupFinishedPage();
 public:
-  KMoneyThingAccountWizard(QWidget *parent = 0, const char *name = 0);
+  KMoneyThingAccountWizard(QWidget *parent, const char *name, KMoneyThingFile* currentFile);
 
   ~KMoneyThingAccountWizard();
+protected slots:
+  void nameChanged(const QString &text);
+  void localeChanged(const QString &id);
+  void pageChanged(const QString &title);
+  void typeChanged(const QString &type);
+  void accept();
 signals:  
   void finished(KMoneyThingAccount *account);
 };

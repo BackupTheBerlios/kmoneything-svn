@@ -99,7 +99,7 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
 
 void KMoneyThingAccountsView::slotAccountWizard()
 {
-  KMoneyThingAccountWizard *wizard = new KMoneyThingAccountWizard(this);
+  KMoneyThingAccountWizard *wizard = new KMoneyThingAccountWizard(this, 0, mFile);
   connect(wizard, SIGNAL(finished(KMoneyThingAccount* )), this, SLOT(slotAddAccount(KMoneyThingAccount* )));
   wizard->show();
 }
@@ -107,7 +107,7 @@ void KMoneyThingAccountsView::slotAccountWizard()
 void KMoneyThingAccountsView::slotAddAccount(KMoneyThingAccount* account)
 {
   mFile->addAccount(account);
-  setAccount(mFile->accounts());
+  setAccount(mFile->accounts() - 1);
 }
 
 void KMoneyThingAccountsView::setFile(KMoneyThingFile *file)
