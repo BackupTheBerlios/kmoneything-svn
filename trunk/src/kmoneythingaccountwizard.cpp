@@ -160,7 +160,7 @@ void KMoneyThingAccountWizard::pageChanged(const QString &title)
 
 void KMoneyThingAccountWizard::typeChanged(const QString &type)
 {
-  if (type != i18n("Cash"))
+  if (type == i18n("Cash"))
   {
     mInstitution->setEnabled(false);
     mAccountNumber->setEnabled(false);
