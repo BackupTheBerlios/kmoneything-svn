@@ -24,6 +24,7 @@
 #define KMONEYTHINGMAINWIDGET_H
 
 #include "kmoneythinghomeview.h"
+#include "kmoneythingfile.h"
 
 #include <qframe.h>
 #include <kjanuswidget.h>
@@ -44,18 +45,22 @@ public:
     transactionsPage
   };
 private:
-  QFrame *homeFrame;
-  KMoneyThingHomeView *homeView;
-  QFrame *accountsFrame;
-  QFrame *calendarFrame;
-  QFrame *categoriesFrame;
-  QFrame *findFrame;
-  QFrame *transactionsFrame;
+  QFrame* homeFrame;
+  KMoneyThingHomeView* homeView;
+  QFrame* accountsFrame;
+  QFrame* calendarFrame;
+  QFrame* categoriesFrame;
+  QFrame* findFrame;
+  QFrame* transactionsFrame;
+  KMoneyThingFile* currentFile;
+  void setupPages();
 public:
   void activatePage(KMoneyThingMainWidget::Page page);
   KMoneyThingMainWidget(QWidget *parent=0, const char *name=0, int face = KJanusWidget::IconList);
 
   ~KMoneyThingMainWidget();
+public slots:
+  void slotSave();
 };
 
 #endif

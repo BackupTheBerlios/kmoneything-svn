@@ -23,12 +23,21 @@
 #include "kmoneythingmainwidget.h"
 
 #include <qlayout.h>
+#include <qfile.h>
+#include <qcstring.h>
 
+#include <kmessagebox.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
 KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name, int face)
  : KJanusWidget(parent, name, face)
+{
+  currentFile = new KMoneyThingFile();
+  setupPages();
+}
+
+void KMoneyThingMainWidget::setupPages()
 {
   QVBoxLayout *layout;
 
@@ -67,6 +76,17 @@ void KMoneyThingMainWidget::activatePage(KMoneyThingMainWidget::Page page)
       showPage(pageIndex(transactionsFrame));
       break;
   }
+}
+
+void KMoneyThingMainWidget::slotSave()
+{
+  // TODO: Write this properly
+  QByteArray dump = qCompress(currentFile->dump());
+  QFile file("/tmp/foo2");
+  file.open(IO_WriteOnly);
+  file.writeBlock(dump.data(), dump.size());
+  file.close();
+  KMessageBox::information(0, "Written to /tmp/foo2");
 }
 
 KMoneyThingMainWidget::~KMoneyThingMainWidget()

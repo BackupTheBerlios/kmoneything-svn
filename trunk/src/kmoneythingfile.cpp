@@ -129,7 +129,6 @@ QByteArray KMoneyThingFile::dump()
   QByteArray output;
   QDataStream stream(output, IO_WriteOnly);
   stream << "KMoneyThing Document" << "Version" << "pre1_draft";
-  //Format: pseudo-XML
   stream << "<name>" << mName << "</name>";
   stream << "<locale>" << mLocale->country() << "</locale>";
   for (Q_UINT32 aI = 0; aI < accounts(); aI++)
@@ -231,7 +230,7 @@ QByteArray KMoneyThingFile::dump()
     stream << "</recurrence>";
   }
   
-  stream.unsetDevice();
+  stream.device()->close();
   return output;
 }
 

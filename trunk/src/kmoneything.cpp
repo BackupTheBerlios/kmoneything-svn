@@ -42,6 +42,7 @@ KMoneyThing::KMoneyThing()
   
   mainWidget = new KMoneyThingMainWidget(this);
   setCentralWidget(mainWidget);
+  
   setupActions();
   statusBar()->message(i18n("Ready."));
 }
@@ -74,7 +75,7 @@ void KMoneyThing::setupActions()
   
   fileMenu->insertSeparator();
   
-  mSaveAction = KStdAction::save(this, SLOT(slotUnimplemented()), actionCollection());
+  mSaveAction = KStdAction::save(mainWidget, SLOT(slotSave()), actionCollection());
   mSaveAction->plug(fileMenu);
   mSaveAction->plug(toolBar());
   
