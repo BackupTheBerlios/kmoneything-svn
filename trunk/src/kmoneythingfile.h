@@ -26,7 +26,7 @@
 #include "kmoneythingaccount.h"
 #include "kmoneythingrecurringtransaction.h"
 
-#include <qvaluevector.h>
+#include <qptrlist.h>
 #include <qcstring.h>
 #include <qstring.h>
 
@@ -35,11 +35,13 @@
 */
 class KMoneyThingFile{
 private:
-  QValueVector<KMoneyThingAccount> mAccounts;
+  QPtrList<KMoneyThingAccount> mAccounts;
   QString mLocale;
   QString mName;
-  QValueVector<QString> mCategories;
-  QValueVector<KMoneyThingRecurringTransaction> mRecurrences;
+  QPtrList<QString> mCategories;
+  QPtrList<KMoneyThingRecurringTransaction> mRecurrences;
+  QByteArray mDumped;
+  bool mDumpDirty;
 public:
   KMoneyThingFile();
   KMoneyThingFile(QByteArray *savedData);
