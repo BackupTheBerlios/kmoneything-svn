@@ -24,13 +24,14 @@
 #define KMONEYTHINGACCOUNTSVIEW_H
 
 #include "kmoneythingfile.h"
+#include "kmoneythingaccount.h"
 
 #include <qlabel.h>
 
 #include <kcombobox.h>
 #include <kpushbutton.h>
-#include <ktextedit.h>
 #include <klineedit.h>
+#include <ktextedit.h>
 
 /**
 @author Fred Emmott
@@ -39,26 +40,28 @@ class KMoneyThingAccountsView : public QWidget
 {
 Q_OBJECT
 private:
-  KMoneyThingFile *mCurrentFile;
+  KMoneyThingFile *mFile;
+  KMoneyThingAccount *mAccount;
   KComboBox* mAccountCombo;
   KPushButton* mNewAccount;
   QLabel* mNameLabel;
   KLineEdit* mName;
-  QLabel* mDescriptionLabel;
-  KTextEdit* mDescription;
   QLabel* mInstitutionLabel;
   KLineEdit* mInstitution;
   QLabel* mNumberLabel;
   KLineEdit* mNumber;
+  QLabel* mDescriptionLabel;
+  KTextEdit* mDescription;
   KPushButton* mApply;
   KPushButton* mRemove;
 public:
+  void setFile(KMoneyThingFile *file);
+  void setAccount(Q_UINT32 id);
   KMoneyThingAccountsView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *currentFile = 0);
 
   ~KMoneyThingAccountsView();
 public slots:
   void slotUnimplemented();
-  void slotRefresh();
 signals:
   void signalRefresh();
 };

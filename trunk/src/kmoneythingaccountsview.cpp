@@ -35,18 +35,12 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   QHBoxLayout *hbox;
   QFrame *seperator;
   
-  currentFile == 0
-    ? mCurrentFile = new KMoneyThingFile
-    : mCurrentFile = currentFile;
-
   QVBoxLayout *mainLayout = new QVBoxLayout(this, 7);
   
   hbox = new QHBoxLayout(this, 2);
   mainLayout->addItem(hbox);
   
   mAccountCombo = new KComboBox(this);
-  for (Q_UINT32 i = 0; i < mCurrentFile->accounts(); i++)
-    mAccountCombo->insertItem(mCurrentFile->getAccount(i)->name());
   mAccountCombo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
   hbox->add(mAccountCombo);
   
@@ -67,20 +61,20 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   grid->addWidget(mNameLabel, 0, 0);
   grid->addWidget(mName, 0, 1);
   
-  mDescription = new KTextEdit(this);
-  mDescriptionLabel = new QLabel(mDescription, i18n("&Description:"), this);
-  grid->addWidget(mDescriptionLabel, 1, 0);
-  grid->addWidget(mDescription, 1, 1);
-  
   mInstitution = new KLineEdit(this);
   mInstitutionLabel = new QLabel(mInstitution, i18n("&Institution:"), this);
-  grid->addWidget(mInstitutionLabel, 2, 0);
-  grid->addWidget(mInstitution, 2, 1);
+  grid->addWidget(mInstitutionLabel, 1, 0);
+  grid->addWidget(mInstitution, 1, 1);
   
   mNumber = new KLineEdit(this);
   mNumberLabel = new QLabel(mNumber, i18n("N&umber:"), this);
-  grid->addWidget(mNumberLabel, 3, 0);
-  grid->addWidget(mNumber, 3, 1);
+  grid->addWidget(mNumberLabel, 2, 0);
+  grid->addWidget(mNumber, 2, 1);
+  
+  mDescription = new KTextEdit(this);
+  mDescriptionLabel = new QLabel(mDescription, i18n("&Description:"), this);
+  grid->addWidget(mDescriptionLabel, 3, 0);
+  grid->addWidget(mDescription, 3, 1);
 
   seperator = new QFrame(this);
   seperator->setFrameStyle(QFrame::HLine | QFrame::Sunken);
@@ -100,13 +94,73 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   connect(mRemove, SIGNAL(clicked()), this, SLOT(slotUnimplemented()));
   hbox->add(mRemove);
   
-  slotRefresh();
+  setFile(currentFile);
 }
 
-void KMoneyThingAccountsView::slotRefresh()
+void KMoneyThingAccountsView::setFile(KMoneyThingFile *file)
 {
-  // TODO
-  emit signalRefresh();
+  file == 0
+    ? mFile = new KMoneyThingFile()
+    : mFile = file;
+  
+  mAccountCombo->clear();
+  for (Q_UINT32 i = 0; i < mFile->accounts(); i++)
+    mAccountCombo->insertItem(mFile->getAccount(0)->name());
+  
+  setAccount(0);
+}
+
+void KMoneyThingAccountsView::setAccount(Q_UINT32 id)
+{
+  mApply->setEnabled(false);
+  
+  if (mFile->accounts() == 0)
+  {
+    mAccount = 0;
+    
+    mAccountCombo->setEnabled(false);
+    
+    mNameLabel->setEnabled(false);
+    mName->setEnabled(false);
+    mName->setText("");
+    mInstitutionLabel->setEnabled(false);
+    mInstitution->setEnabled(false);
+    mInstitution->setText("");
+    mNumberLabel->setEnabled(false);
+    mNumber->setEnabled(false);
+    mNumber->setText("");
+    mDescriptionLabel->setEnabled(false);
+    mDescription->setEnabled(false);
+    mDescription->setText("");    
+    mRemove->setEnabled(false);
+  }
+  else
+  {
+    mAccount = mFile->getAccount(id);  
+  
+    mAccountCombo->setEnabled(true);
+    mAccountCombo->setCurrentItem(id);
+    
+    mNameLabel->setEnabled(true);
+    mName->setEnabled(true);
+    mName->setText(mAccount->name());
+    mDescriptionLabel->setEnabled(true);
+    mDescription->setEnabled(true);
+    mDescription->setText(mAccount->description());
+    mRemove->setEnabled(true);
+    switch (mAccount->type())
+      case "cash":
+        mInstitutionLabel->setEnabled(false);
+        mInstitution->setEnabled(false);
+        mInstitution->setText("");
+        mNumberLabel->setEnabled(true);
+        mNumber->setEnabled(false);
+        mNumber->setText("");
+        break;
+      default:
+        KMessageBox::error(this, i18n("Unknown account type: %1").arg(mAccount->type()));
+    }
+  }
 }
 
 void KMoneyThingAccountsView::slotUnimplemented()
