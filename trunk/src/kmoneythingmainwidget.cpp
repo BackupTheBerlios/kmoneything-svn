@@ -19,21 +19,15 @@
  ***************************************************************************/
 #include "kmoneythingmainwidget.h"
 
-#include <qlayout.h>
-#include <qwidgetstack.h>
+#include <qvbox.h>
 
-#include <kiconview.h>
+#include <kjanuswidget.h>
 #include <klocale.h>
 
 KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name)
- : QFrame(parent, name)
+ : KJanusWidget(parent, name, KJanusWidget::IconList)
 {
-  QHBoxLayout *layout = new QHBoxLayout(this);
-  
-  navBar = new KIconView(this);
-  navBar->setMode(KIconView::Select);
-  KIconViewItem *summary = new KIconViewItem(navBar, i18n("Summary"));
-  layout->addWidget(navBar);
+  homeFrame = addPage(i18n("Home"), i18n("Home"),QPixmap());  
 }
 
 
@@ -41,4 +35,4 @@ KMoneyThingMainWidget::~KMoneyThingMainWidget()
 {
 }
 
-
+#include "kmoneythingmainwidget.moc"

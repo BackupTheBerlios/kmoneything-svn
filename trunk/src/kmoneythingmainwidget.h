@@ -21,17 +21,16 @@
 #define KMONEYTHINGMAINWIDGET_H
 
 #include <qframe.h>
-#include <qwidgetstack.h>
-#include <kiconview.h>
+#include <kjanuswidget.h>
 
 /**
 @author Fred Emmott
 */
-class KMoneyThingMainWidget : public QFrame
+class KMoneyThingMainWidget : public KJanusWidget
 {
+  Q_OBJECT
 private:
-  KIconView *navBar;
-  QWidgetStack *widgetStack;
+  QFrame *homeFrame;
 public:
   KMoneyThingMainWidget(QWidget *parent=0, const char *name=0);
 

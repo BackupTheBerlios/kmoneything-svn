@@ -1,5 +1,5 @@
 # set the include path for X, qt and KDE
-INCLUDES = $(all_includes)
+INCLUDES = -I$(top_srcdir)/src $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = kmoneything.h kmoneythingmainwidget.h
@@ -25,10 +25,10 @@ kmoneything_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kmoneything_LDADD = $(LIB_KDEUI)
 
 # this is where the desktop file will go 
-shelldesktopdir   = $(kde_appsdir)/Utilities
+shelldesktopdir = $(kde_appsdir)/Utilities
 shelldesktop_DATA = kmoneything.desktop
 
 # this is where the shell's XML-GUI resource file goes
-shellrcdir   = $(kde_datadir)/kmoneything
+shellrcdir = $(kde_datadir)/kmoneything
 shellrc_DATA = kmoneythingui.rc
 
