@@ -96,7 +96,18 @@ QString KMoneyThingAccount::accountNumber()
 
 void KMoneyThingAccount::setAccountNumber(QString number)
 {
-  number = "";
+  number = "";  // otherwise g++ gives warning
+  return;
+}
+
+QString KMoneyThingAccount::institution()
+{
+  return QString("");
+}
+
+void KMoneyThingAccount::setInstitution(QString institution)
+{
+  institution = "";  // otherwise g++ gives warning
   return;
 }
 

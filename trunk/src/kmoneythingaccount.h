@@ -55,6 +55,8 @@ public:
   virtual QString type() = 0;
   QString accountNumber();  // eg account number and sort code
   void setAccountNumber(QString number);
+  QString institution();
+  void setInstitution(QString institution);
 
   KMoneyThingAccount(QString name = QString(), double startingBalance = 0);
   virtual ~KMoneyThingAccount();

@@ -139,6 +139,7 @@ QByteArray KMoneyThingFile::dump()
     stream << "<name>" << account->name() << "</name>";
     stream << "<description>" << account->description() << "</description>";
     stream << "<accountNumber>" << account->accountNumber() << "</accountNumber>";
+    stream << "<institution>" << account->institution() << "</institution>";
     stream << "<balance>" << account->balance() << "</balance>";
     stream << "<startingBalance>" << account->startingBalance() << "</startingBalance>";
     for (Q_UINT32 tI = 0; tI < account->transactions(); tI++)
@@ -148,6 +149,7 @@ QByteArray KMoneyThingFile::dump()
       stream << "<name>" << transaction->name() << "</name>";
       stream << "<type>" << transaction->type() << "</type>";
       stream << "<category>" << transaction->category() << "</category>";
+      stream << "<payee>" << transaction->payee() << "</payee>";
       stream << "<state>" << transaction->state() << "</state>";
       stream << "<statement>" << transaction->statementId() << "</statement>";
       stream << "<split>" << transaction->split() << "</split>";

@@ -200,6 +200,15 @@ KMoneyThingTransaction::Reference* KMoneyThingTransaction::getReference(Q_UINT32
   return mReferences.at(trId);
 }
 
+QString KMoneyThingTransaction::payee()
+{
+  return mPayee;
+}
+
+void KMoneyThingTransaction::setPayee(QString payee)
+{
+  mPayee = payee;
+}
   
 KMoneyThingTransaction::KMoneyThingTransaction()
 {

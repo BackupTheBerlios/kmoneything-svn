@@ -23,6 +23,7 @@
 #include "kmoneythinghomeview.h"
 
 #include <qlayout.h>
+#include <qstring.h>
 
 #include <khtml_part.h>
 #include <khtmlview.h>
@@ -50,7 +51,12 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name, KMon
   khtmlPart->write("<h2>" + i18n("Summary") + "</h2>");
   khtmlPart->write("<table>");
   khtmlPart->write("<tr><th>" + i18n("Account") + "</th><th>" + i18n("Balance") + "</th></tr>");
-  //TODO: ACCOUNT SUMMARIES
+  for (Q_UINT32 i = 0; i < mCurrentFile->accounts(); i++)
+  {
+    QString accountName = mCurrentFile->getAccount(i)->name();
+    QString accountBalance = mCurrentFile->getAccount(i)->name();
+    khtmlPart->write(QString("<tr><td>%1</td><td>%2</td></tr>").arg(accountName).arg(accountBalance));
+  }
   QString totalBalance = locale->formatMoney(0.0);
   khtmlPart->write("<tr><th>" + i18n("Total:") + "</th><th>" + totalBalance + "</th></tr>");
   khtmlPart->write("</table>");

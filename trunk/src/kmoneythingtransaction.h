@@ -61,6 +61,7 @@ private:
   QString mStatementId;
   QString mType; // Credit card, direct debit, standing order, etc
   QPtrList<KMoneyThingTransaction::Reference> mReferences;
+  QString mPayee;
 public:
   double balance();
   void setBalance(double newBalance);
@@ -100,6 +101,8 @@ public:
   bool delReference(Q_UINT32 trId);
   bool delReference(KMoneyThingTransaction::Reference* reference);
   KMoneyThingTransaction::Reference* getReference(Q_UINT32 trId);
+  QString payee();
+  void setPayee(QString payee);
     
   KMoneyThingTransaction();
   ~KMoneyThingTransaction();
