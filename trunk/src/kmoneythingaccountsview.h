@@ -23,9 +23,12 @@
 #ifndef KMONEYTHINGACCOUNTSVIEW_H
 #define KMONEYTHINGACCOUNTSVIEW_H
 
+#include "kmoneythingview.h"
 #include "kmoneythingfile.h"
 #include "kmoneythingaccount.h"
 #include "kmoneythingaccountwizard.h"
+#include "kmoneythingutils.h"
+#include "klanguagebutton.h"
 
 #include <qlabel.h>
 
@@ -33,11 +36,12 @@
 #include <kpushbutton.h>
 #include <klineedit.h>
 #include <ktextedit.h>
+#include <knuminput.h>
 
 /**
 @author Fred Emmott
 */
-class KMoneyThingAccountsView : public QWidget
+class KMoneyThingAccountsView : public KMoneyThingView
 {
 Q_OBJECT
 private:
@@ -45,6 +49,10 @@ private:
   KMoneyThingAccount *mAccount;
   KComboBox* mAccountCombo;
   KPushButton* mNewAccount;
+  QLabel* mLocaleLabel;
+  KLanguageButton* mLocale;
+  QLabel* mStartingBalanceLabel;
+  KDoubleNumInput* mStartingBalance;
   QLabel* mNameLabel;
   KLineEdit* mName;
   QLabel* mInstitutionLabel;
@@ -56,20 +64,26 @@ private:
   KPushButton* mApply;
   KPushButton* mRemove;
 public:
-  void setFile(KMoneyThingFile *file);
+  virtual void setFile(KMoneyThingFile *file);
   void setAccount(Q_UINT32 id);
+  virtual void undoChanges();
+  virtual void saveChanges();
+  
   KMoneyThingAccountsView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *currentFile = 0);
 
   ~KMoneyThingAccountsView();
+protected:
+  virtual void hideEvent(QHideEvent *event);
 private slots:
+  void slotApply();
   void slotAccountWizard();
+  void slotLocaleChanged(const QString &id);
+  void slotRemoveSelectedAccount();
+  void slotSomethingChanged();
 public slots:
   void slotAddAccount(KMoneyThingAccount* account);
-  void slotRemoveSelectedAccount();
-  void slotRefresh();
+  virtual void slotRefresh();
   void slotUnimplemented();
-signals:
-  void signalRefresh();
 };
 
 #endif

@@ -24,6 +24,7 @@
 #define KMONEYTHINGHOMEVIEW_H
 
 #include "kmoneythingfile.h"
+#include "kmoneythingview.h"
 
 #include <qwidget.h>
 #include <qlayout.h>
@@ -34,7 +35,7 @@
 /**
 @author Fred Emmott
 */
-class KMoneyThingHomeView : public QWidget
+class KMoneyThingHomeView : public KMoneyThingView
 {
 Q_OBJECT
 private:
@@ -43,11 +44,12 @@ private:
   void doHTML();
   QHBoxLayout *layout;
 public:
+  virtual void setFile(KMoneyThingFile* file){mCurrentFile = file;}
   KMoneyThingHomeView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile* currentFile = 0);
 
   ~KMoneyThingHomeView();
 public slots:
-  void slotRefresh();
+  virtual void slotRefresh();
 };
 
 #endif

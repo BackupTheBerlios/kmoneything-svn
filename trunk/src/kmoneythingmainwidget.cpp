@@ -52,12 +52,14 @@ void KMoneyThingMainWidget::setupPages()
   homeView = new KMoneyThingHomeView(homeFrame, 0, mCurrentFile);
   layout->addWidget(homeView);
   connect(this, SIGNAL(signalRefresh()), homeView, SLOT(slotRefresh()));
+  connect(homeView, SIGNAL(undoOrSave(KMoneyThingView* )), this, SLOT(slotUndoOrSave(KMoneyThingView* )));
   
   accountsFrame = addPage(i18n("Accounts"), i18n("Accounts"), DesktopIcon("identity"));
   layout = new QVBoxLayout(accountsFrame);
   accountsView = new KMoneyThingAccountsView(accountsFrame, 0, mCurrentFile);
   layout->addWidget(accountsView);
   connect(this, SIGNAL(signalRefresh()), accountsView, SLOT(slotRefresh()));
+  connect(accountsView, SIGNAL(undoOrSave(KMoneyThingView* )), this, SLOT(slotUndoOrSave(KMoneyThingView* )));
   
   calendarFrame = addPage(i18n("Schedule"), i18n("Schedule"), DesktopIcon("today"));
   categoriesFrame = addPage(i18n("Categories"), i18n("Categories"), DesktopIcon("folder"));
@@ -172,6 +174,23 @@ void KMoneyThingMainWidget::slotOpen()
   
   emit signalRefresh();
 }
+
+void KMoneyThingMainWidget::slotUndoOrSave(KMoneyThingView *view)
+{
+  int res = KMessageBox::warningYesNo(this, i18n(
+    "There are unapplied changes in the active page.\n"
+    "Do you want to save the changes, or discard them?"), i18n("Unapplied Changes"), i18n("&Apply"), i18n("&Discard"));
+  switch (res)
+  {
+    case KMessageBox::Yes:
+      view->saveChanges();
+      break;
+    case KMessageBox::No:
+      view->undoChanges();
+      break;
+  }
+}
+
 KMoneyThingMainWidget::~KMoneyThingMainWidget()
 {
 }

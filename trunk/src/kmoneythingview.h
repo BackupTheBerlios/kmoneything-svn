@@ -17,62 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
- 
-// $Id$
- 
-#ifndef KMONEYTHINGMAINWIDGET_H
-#define KMONEYTHINGMAINWIDGET_H
 
-#include "kmoneythingview.h"
-#include "kmoneythinghomeview.h"
-#include "kmoneythingaccountsview.h"
+// $Id$
+
+#ifndef KMONEYTHINGVIEW_H
+#define KMONEYTHINGVIEW_H
+
 #include "kmoneythingfile.h"
 
-#include <qframe.h>
+#include <qwidget.h>
 #include <qevent.h>
-#include <qobject.h>
-
-#include <kjanuswidget.h>
 
 /**
 @author Fred Emmott
 */
-class KMoneyThingMainWidget : public KJanusWidget
+class KMoneyThingView : public QWidget
 {
-  Q_OBJECT
+Q_OBJECT
 public:
-  enum Page{
-    homePage,
-    accountsPage,
-    calendarPage,
-    categoriesPage,
-    findPage,
-    transactionsPage
-  };
-private:
-  QFrame* homeFrame;
-  KMoneyThingHomeView* homeView;
-  QFrame* accountsFrame;
-  KMoneyThingAccountsView* accountsView;
-  QFrame* calendarFrame;
-  QFrame* categoriesFrame;
-  QFrame* findFrame;
-  QFrame* transactionsFrame;
-  KMoneyThingFile* mCurrentFile;
-  void setupPages();
-public:
-  void activatePage(KMoneyThingMainWidget::Page page);
-  KMoneyThingMainWidget(QWidget *parent=0, const char *name=0, int face = KJanusWidget::IconList);
+  virtual void setFile(KMoneyThingFile* file) = 0;
+  virtual void undoChanges(){};
+  virtual void saveChanges(){};
+  KMoneyThingView(QWidget *parent = 0, const char *name = 0);
 
-  ~KMoneyThingMainWidget();
+  ~KMoneyThingView();
 public slots:
-  void slotOpen();
-  void slotSave();
-  void slotSaveAs();
-  void slotUndoOrSave(KMoneyThingView *view);
+  virtual void slotRefresh() = 0;
 signals:
-  void setStatus(const QString &status);
-  void signalRefresh();
+  void undoOrSave(KMoneyThingView *view);
 };
 
 #endif

@@ -30,9 +30,8 @@
 #include <kiconloader.h>
 
 KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *name, KMoneyThingFile *currentFile)
- : QWidget(parent, name)
+ : KMoneyThingView(parent, name)
 {
-  // TODO: enable apply button when appropriate
   QHBoxLayout *hbox;
   QFrame *seperator;
   
@@ -53,29 +52,47 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   seperator->setFrameStyle(QFrame::HLine | QFrame::Sunken);
   mainLayout->add(seperator);
   
-  QGridLayout *grid = new QGridLayout(this, 4, 2);
+  QGridLayout *grid = new QGridLayout(this, 6, 2);
   grid->setSpacing(hbox->spacing());
   mainLayout->addItem(grid);
   
+  mLocale = new KLanguageButton(this);
+  mLocaleLabel = new QLabel(mLocale, i18n("&Locale:"), this);
+  grid->addWidget(mLocaleLabel, 0, 0);
+  grid->addWidget(mLocale, 0, 1);
+  KMoneyThingUtils::loadCountryList(mLocale);
+  connect(mLocale, SIGNAL(activated(const QString& )), this, SLOT(slotLocaleChanged(const QString& )));
+  connect(mLocale, SIGNAL(activated(const QString& )), this, SLOT(slotSomethingChanged()));
+  
+  mStartingBalance = new KDoubleNumInput(this);
+  mStartingBalanceLabel = new QLabel(mStartingBalance, i18n("&Starting Balance:"), this);
+  grid->addWidget(mStartingBalanceLabel, 1, 0);
+  grid->addWidget(mStartingBalance, 1, 1);
+  connect(mStartingBalance, SIGNAL(valueChanged(double)), this, SLOT(slotSomethingChanged()));
+  
   mName = new KLineEdit(this);
   mNameLabel = new QLabel(mName, i18n("Na&me:"), this);
-  grid->addWidget(mNameLabel, 0, 0);
-  grid->addWidget(mName, 0, 1);
+  grid->addWidget(mNameLabel, 2, 0);
+  grid->addWidget(mName, 2, 1);
+  connect(mName, SIGNAL(textChanged(const QString& )), this, SLOT(slotSomethingChanged()));
   
   mInstitution = new KLineEdit(this);
   mInstitutionLabel = new QLabel(mInstitution, i18n("&Institution:"), this);
-  grid->addWidget(mInstitutionLabel, 1, 0);
-  grid->addWidget(mInstitution, 1, 1);
+  grid->addWidget(mInstitutionLabel, 3, 0);
+  grid->addWidget(mInstitution, 3, 1);
+  connect(mInstitution, SIGNAL(textChanged(const QString& )), this, SLOT(slotSomethingChanged()));
   
   mNumber = new KLineEdit(this);
   mNumberLabel = new QLabel(mNumber, i18n("N&umber:"), this);
-  grid->addWidget(mNumberLabel, 2, 0);
-  grid->addWidget(mNumber, 2, 1);
+  grid->addWidget(mNumberLabel, 4, 0);
+  grid->addWidget(mNumber, 4, 1);
+  connect(mNumber, SIGNAL(textChanged(const QString& )), this, SLOT(slotSomethingChanged()));
   
   mDescription = new KTextEdit(this);
   mDescriptionLabel = new QLabel(mDescription, i18n("&Description:"), this);
-  grid->addWidget(mDescriptionLabel, 3, 0);
-  grid->addWidget(mDescription, 3, 1);
+  grid->addWidget(mDescriptionLabel, 5, 0);
+  grid->addWidget(mDescription, 5, 1);
+  connect(mDescription, SIGNAL(textChanged()), this, SLOT(slotSomethingChanged()));
 
   seperator = new QFrame(this);
   seperator->setFrameStyle(QFrame::HLine | QFrame::Sunken);
@@ -87,8 +104,8 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   QSpacerItem *spacer = new QSpacerItem(0, 0, QSizePolicy::MinimumExpanding);
   hbox->addItem(spacer);
   
-  mApply = new KPushButton(SmallIconSet("apply"), i18n("&Apply"), this);
-  connect(mApply, SIGNAL(clicked()), this, SLOT(slotUnimplemented()));
+  mApply = new KPushButton(SmallIconSet("ok"), i18n("&Apply"), this);
+  connect(mApply, SIGNAL(clicked()), this, SLOT(slotApply()));
   hbox->add(mApply);
   
   mRemove = new KPushButton(SmallIconSet("fileclose"), i18n("&Remove"), this);
@@ -129,14 +146,20 @@ void KMoneyThingAccountsView::setFile(KMoneyThingFile *file)
 
 void KMoneyThingAccountsView::setAccount(Q_UINT32 id)
 {
-  mApply->setEnabled(false);
-  
-  if (mFile->accounts() == 0)
+  if (id >= mFile->accounts())
   {
     mAccount = 0;
     
     mAccountCombo->setEnabled(false);
     
+    mLocaleLabel->setEnabled(false);
+    mLocale->setEnabled(false);
+    mLocale->setCurrentItem(KGlobal::locale()->country());
+    mStartingBalanceLabel->setEnabled(false);
+    mStartingBalance->setEnabled(false);
+    mStartingBalance->setValue(0);
+    mStartingBalance->setPrefix(KGlobal::locale()->currencySymbol());
+    mStartingBalance->setPrecision(KGlobal::locale()->fracDigits());
     mNameLabel->setEnabled(false);
     mName->setEnabled(false);
     mName->setText("");
@@ -154,10 +177,21 @@ void KMoneyThingAccountsView::setAccount(Q_UINT32 id)
   else
   {
     mAccount = mFile->getAccount(id);  
-  
+
+    KLocale locale("KMoneyThing");
+    locale.setCountry(mAccount->locale());
+    
     mAccountCombo->setEnabled(true);
     mAccountCombo->setCurrentItem(id);
     
+    mLocaleLabel->setEnabled(true);
+    mLocale->setEnabled(true);
+    mLocale->setCurrentItem(mAccount->locale());
+    mStartingBalanceLabel->setEnabled(true);
+    mStartingBalance->setEnabled(true);
+    mStartingBalance->setValue(mAccount->startingBalance());
+    mStartingBalance->setPrefix(locale.currencySymbol());
+    mStartingBalance->setPrecision(locale.fracDigits());
     mNameLabel->setEnabled(true);
     mName->setEnabled(true);
     mName->setText(mAccount->name());
@@ -177,7 +211,41 @@ void KMoneyThingAccountsView::setAccount(Q_UINT32 id)
     else
         KMessageBox::error(this, i18n("Unknown account type: %1").arg(mAccount->type()));
   }
+    mApply->setEnabled(false);
+}
 
+void KMoneyThingAccountsView::undoChanges()
+{
+  setFile(mFile);
+}
+
+void KMoneyThingAccountsView::saveChanges()
+{
+  slotApply();
+  setFile(mFile);
+}
+
+void KMoneyThingAccountsView::slotApply()
+{
+  double newBalance;
+  
+  newBalance = mAccount->balance() + (mStartingBalance->value() - mAccount->startingBalance());
+  
+  mAccount->setAccountNumber(mNumber->text());
+  mAccount->setBalance(newBalance);
+  mAccount->setDescription(mDescription->text());
+  mAccount->setInstitution(mInstitution->text());
+  mAccount->setLocale(mLocale->current());
+  mAccount->setName(mName->text());
+  mAccount->setStartingBalance(mStartingBalance->value());
+  mApply->setEnabled(false);
+}
+
+void KMoneyThingAccountsView::hideEvent(QHideEvent *event)
+{
+  if (mApply->isEnabled())
+    emit undoOrSave(this);
+  QWidget::hideEvent(event);
 }
 
 void KMoneyThingAccountsView::slotRemoveSelectedAccount()
@@ -194,7 +262,20 @@ void KMoneyThingAccountsView::slotRemoveSelectedAccount()
 
 void KMoneyThingAccountsView::slotRefresh()
 {
-  setFile(mFile);
+  setAccount(0);
+}
+
+void KMoneyThingAccountsView::slotLocaleChanged(const QString &id)
+{
+  KLocale locale("KMoneyThing");
+  locale.setCountry(id);
+  mStartingBalance->setPrefix(locale.currencySymbol());
+  mStartingBalance->setPrecision(locale.fracDigits());
+}
+
+void KMoneyThingAccountsView::slotSomethingChanged()
+{
+  mApply->setEnabled(true);
 }
 
 void KMoneyThingAccountsView::slotUnimplemented()

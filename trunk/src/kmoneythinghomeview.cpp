@@ -29,7 +29,7 @@
 #include <klocale.h>
 
 KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name, KMoneyThingFile* currentFile)
- : QWidget(parent, name)
+ : KMoneyThingView(parent, name)
 {
   currentFile == 0
     ? mCurrentFile = new KMoneyThingFile
