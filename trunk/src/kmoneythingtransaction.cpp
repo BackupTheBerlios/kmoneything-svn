@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+ 
+// $Id$
+ 
 #include "kmoneythingtransaction.h"
 
 Q_UINT32 KMoneyThingTransaction::id()
@@ -79,6 +82,123 @@ KMoneyThingSubTransaction KMoneyThingTransaction::getSubTransaction(Q_UINT32 trI
   return mSubTransactions[trId];
 }
 
+bool KMoneyThingTransaction::foreign()
+{
+  return mForeign;
+}
+void KMoneyThingTransaction::setForeign(bool isForeign)
+{
+  mForeign = isForeign;
+}
+
+QString KMoneyThingTransaction::transactionCurrencyName()
+{
+  return mTransactionCurrencyName;
+}
+void KMoneyThingTransaction::setTransactionCurrencyName(QString currencyName)
+{
+  mTransactionCurrencyName = currencyName;
+}
+
+double KMoneyThingTransaction::transactionCurrencyIn()
+{
+  return mTransactionCurrencyIn;
+}
+void KMoneyThingTransaction::setTransactionCurrencyIn(double newVal)
+{
+  mTransactionCurrencyIn = newVal;
+}
+
+double KMoneyThingTransaction::transactionCurrencyOut()
+{
+  return mTransactionCurrencyOut;
+}
+void KMoneyThingTransaction::setTransactionCurrencyOut(double newVal)
+{
+  mTransactionCurrencyOut = newVal;
+}
+
+float KMoneyThingTransaction::exchangeRate()
+{
+  return mExchangeRate;
+}
+void KMoneyThingTransaction::setExchangeRate(float newVal)
+{
+  mExchangeRate = newVal;
+}
+
+double KMoneyThingTransaction::accountCurrencyIn()
+{
+  return mAccountCurrencyIn;
+}
+void KMoneyThingTransaction::setAccountCurrencyIn(double newVal)
+{
+  mAccountCurrencyIn = newVal;
+}
+
+double KMoneyThingTransaction::accountCurrencyOut()
+{
+  return mAccountCurrencyOut;
+}
+void KMoneyThingTransaction::setAccountCurrencyOut(double newVal)
+{
+  mAccountCurrencyOut = newVal;
+}
+
+KMoneyThingTransaction::ReconcileState KMoneyThingTransaction::state()
+{
+  return mState;
+}
+void KMoneyThingTransaction::setState(KMoneyThingTransaction::ReconcileState newState)
+{
+  mState = newState;
+}
+
+QString KMoneyThingTransaction::name()
+{
+  return mName;
+}
+void KMoneyThingTransaction::setName(QString newVal)
+{
+  mName = newVal;
+}
+
+QString KMoneyThingTransaction::category()
+{
+  return mCategory;
+}
+void KMoneyThingTransaction::setCategory(QString newVal)
+{
+  mCategory = newVal;
+}
+
+QString KMoneyThingTransaction::statementId()
+{
+  return mStatementId;
+}
+void KMoneyThingTransaction::setStatementId(QString newVal)
+{
+  mStatementId = newVal;
+}
+
+QString KMoneyThingTransaction::type()
+{
+  return mType;
+}
+void KMoneyThingTransaction::setType(QString newVal)
+{
+  mType = newVal;
+}
+
+KMoneyThingTransaction::Reference KMoneyThingTransaction::reference()
+{
+  return mReference;
+}
+void KMoneyThingTransaction::setReference(KMoneyThingTransaction::Reference newVal)
+{
+  mReference = newVal;
+}
+  
 KMoneyThingTransaction::KMoneyThingTransaction(Q_UINT32 Id)
 {
   mId = Id;

@@ -87,7 +87,7 @@ public:
   double accountCurrencyIn();
   void setAccountCurrencyIn(double newVal);
   double accountCurrencyOut();
-  void setAccoutnCurrencyOut(double newVal);
+  void setAccountCurrencyOut(double newVal);
   KMoneyThingTransaction::ReconcileState state();
   void setState(KMoneyThingTransaction::ReconcileState newState);
   QString name();
@@ -97,7 +97,7 @@ public:
   QString statementId();
   void setStatementId(QString newVal);
   QString type();
-  void setType(Reference newVal);
+  void setType(QString newVal);
   KMoneyThingTransaction::Reference reference();
   void setReference(KMoneyThingTransaction::Reference newVal);
     
