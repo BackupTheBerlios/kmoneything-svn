@@ -41,8 +41,6 @@ private:
   QString mName;
   QPtrList<QString> mCategories;
   QPtrList<KMoneyThingRecurringTransaction> mRecurrences;
-  QByteArray mDumped;
-  bool mDumpDirty;
 public:
   Q_UINT32 accounts();
   void addAccount(KMoneyThingAccount* account);
