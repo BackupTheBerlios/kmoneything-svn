@@ -190,14 +190,39 @@ void KMoneyThingTransaction::setType(QString newVal)
   mType = newVal;
 }
 
-KMoneyThingTransaction::Reference KMoneyThingTransaction::reference()
+Q_UINT32 KMoneyThingTransaction::references()
 {
-  return mReference;
+  return mReferences.size();
 }
-void KMoneyThingTransaction::setReference(KMoneyThingTransaction::Reference newVal)
+
+void KMoneyThingTransaction::addReference(KMoneyThingTransaction::Reference reference)
 {
-  mReference = newVal;
+  mReferences.append(reference);
 }
+
+bool KMoneyThingTransaction::replaceReference(Q_UINT32 trId, KMoneyThingTransaction::Reference reference)
+{
+  if (trId >= mReferences.size())
+    return false;
+  mReferences[trId] = reference;
+  return true;
+}
+
+bool KMoneyThingTransaction::delReference(Q_UINT32 trId)
+{
+  if (trId >= mReferences.size())
+    return false;
+  mReferences.erase(&mReferences[trId]);
+  return true;
+}
+
+KMoneyThingTransaction::Reference KMoneyThingTransaction::getReference(Q_UINT32 trId)
+{
+  if (trId >= mReferences.size())
+    return KMoneyThingTransaction::Reference();
+  return mReferences[trId];
+}
+
   
 KMoneyThingTransaction::KMoneyThingTransaction(Q_UINT32 Id)
 {

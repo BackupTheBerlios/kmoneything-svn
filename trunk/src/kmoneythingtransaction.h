@@ -61,7 +61,7 @@ private:
   QString mCategory;
   QString mStatementId;
   QString mType; // Credit card, direct debit, standing order, etc
-  Reference mReference;
+  QValueVector<KMoneyThingTransaction::Reference> mReferences;
 public:
   Q_UINT32 id();
   void setId(Q_UINT32 newId);
@@ -98,8 +98,11 @@ public:
   void setStatementId(QString newVal);
   QString type();
   void setType(QString newVal);
-  KMoneyThingTransaction::Reference reference();
-  void setReference(KMoneyThingTransaction::Reference newVal);
+  Q_UINT32 references();
+  void addReference(KMoneyThingTransaction::Reference reference);
+  bool replaceReference(Q_UINT32 trId, KMoneyThingTransaction::Reference reference);
+  bool delReference(Q_UINT32 trId);
+  KMoneyThingTransaction::Reference getReference(Q_UINT32 trId);
     
   KMoneyThingTransaction(Q_UINT32 id = 0);
   ~KMoneyThingTransaction();
