@@ -25,7 +25,7 @@
 
 #include "kmoneythingtransaction.h"
 
-#include <qbytearray.h>
+#include <qcstring.h>
 #include <qstring.h>
 
 /**
@@ -45,13 +45,14 @@ public:
   virtual bool setStartingBalance(double balanace);
   virtual QString description();
   virtual void setDescription(QString description);
-  virtual QString type();
+  virtual QString type() = 0;
   virtual QString accountNumber();  // eg account number and sort code
   virtual void setAccountNumber(QString number);
   virtual QString accountDescription();  // eg Fred's Barclays Account
   virtual void setAccountDescription();
 
-  virtual KMoneyThingAccount(QString name = QString(), double startingBalance = 0);
+  KMoneyThingAccount(QString name = QString(), double startingBalance = 0);
+  virtual ~KMoneyThingAccount();
 };
 
 #endif
