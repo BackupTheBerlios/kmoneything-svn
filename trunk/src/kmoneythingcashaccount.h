@@ -17,41 +17,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef KMONEYTHINGCASHACCOUNT_H
+#define KMONEYTHINGCASHACCOUNT_H
 
-// $Id$
- 
-#ifndef KMONEYTHINGACCOUNT_H
-#define KMONEYTHINGACCOUNT_H
+#include "kmoneythingaccount.h"
 
-#include "kmoneythingtransaction.h"
-
-#include <qbytearray.h>
-#include <qstring.h>
-
+#include <qvaluevector.h>
 /**
 @author Fred Emmott
 */
-class KMoneyThingAccount{
+class KMoneyThingCashAccount : public KMoneyThingAccount
+{
+private:
+  double mBalance;
+  QString mName;
+  QValueVector<KMoneyThingTransaction> mTransactions;
+  double mStartingBalance;
+  QString mDescription;
+  QString mType = "cash";
+  QString mAccountDescription;
 public:
-  virtual double balance();
-  virtual QString name();
-  virtual void setName(QString);
-  virtual Q_UINT32 transactions();
-  virtual bool addTransaction(KMoneyThingTransaction);
-  virtual bool replaceTransaction(Q_UINT32, KMoneyThingTransaction);
-  virtual bool delTransaction(Q_UINT32);
-  virtual KMoneyThingTransaction getTransaction(Q_UINT32);
-  virtual double startingBalance();
-  virtual bool setStartingBalance(double);
-  virtual QString description();
-  virtual void setDescription(QString);
-  virtual QString type();
-  virtual QString accountNumber();  // eg account number and sort code
-  virtual void setAccountNumber(QString);
-  virtual QString accountDescription();  // eg Fred's Barclays Account
-  virtual void setAccountDescription();
+   double balance();
+   QString name();
+   void setName(QString);
+   Q_UINT32 transactions();
+   bool addTransaction(KMoneyThingTransaction);
+   bool replaceTransaction(Q_UINT32, KMoneyThingTransaction);
+   bool delTransaction(Q_UINT32);
+   KMoneyThingTransaction getTransaction(Q_UINT32);
+   double startingBalance();
+   bool setStartingBalance(double);
+   QString description();
+   void setDescription(QString);
+   QString type();
+   QString accountNumber();  // eg account number and sort code
+   void setAccountNumber(QString);
+   QString accountDescription();  // eg Fred's Barclays Account
+   void setAccountDescription();
+  
+  KMoneyThingCashAccount(QString name = QString(), double startingBalance = 0);
 
-  virtual KMoneyThingAccount(QString name = QString(), double startingBalance = 0);
+  ~KMoneyThingCashAccount();
+
 };
 
 #endif

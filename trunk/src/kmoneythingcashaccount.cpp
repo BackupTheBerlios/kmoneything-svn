@@ -17,41 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include "kmoneythingcashaccount.h"
 
-// $Id$
- 
-#ifndef KMONEYTHINGACCOUNT_H
-#define KMONEYTHINGACCOUNT_H
+KMoneyThingCashAccount::KMoneyThingCashAccount(QString name, double startingBalance)
+ : KMoneyThingAccount()
+{
+}
 
-#include "kmoneythingtransaction.h"
 
-#include <qbytearray.h>
-#include <qstring.h>
+KMoneyThingCashAccount::~KMoneyThingCashAccount()
+{
+}
 
-/**
-@author Fred Emmott
-*/
-class KMoneyThingAccount{
-public:
-  virtual double balance();
-  virtual QString name();
-  virtual void setName(QString);
-  virtual Q_UINT32 transactions();
-  virtual bool addTransaction(KMoneyThingTransaction);
-  virtual bool replaceTransaction(Q_UINT32, KMoneyThingTransaction);
-  virtual bool delTransaction(Q_UINT32);
-  virtual KMoneyThingTransaction getTransaction(Q_UINT32);
-  virtual double startingBalance();
-  virtual bool setStartingBalance(double);
-  virtual QString description();
-  virtual void setDescription(QString);
-  virtual QString type();
-  virtual QString accountNumber();  // eg account number and sort code
-  virtual void setAccountNumber(QString);
-  virtual QString accountDescription();  // eg Fred's Barclays Account
-  virtual void setAccountDescription();
 
-  virtual KMoneyThingAccount(QString name = QString(), double startingBalance = 0);
-};
-
-#endif
