@@ -45,7 +45,7 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   hbox->add(mAccountCombo);
   
   mNewAccount = new KPushButton(SmallIconSet("filenew"), i18n("&New..."), this);
-  connect(mNewAccount, SIGNAL(clicked()), this, SLOT(slotUnimplemented()));
+  connect(mNewAccount, SIGNAL(clicked()), this, SLOT(slotAccountWizard()));
   hbox->add(mNewAccount);
   
   seperator = new QFrame(this);
@@ -95,6 +95,19 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   hbox->add(mRemove);
   
   setFile(currentFile);
+}
+
+void KMoneyThingAccountsView::slotAccountWizard()
+{
+  KMoneyThingAccountWizard *wizard = new KMoneyThingAccountWizard(this);
+  connect(wizard, SIGNAL(finished(KMoneyThingAccount* )), this, SLOT(slotAddAccount(KMoneyThingAccount* )));
+  wizard->show();
+}
+
+void KMoneyThingAccountsView::slotAddAccount(KMoneyThingAccount* account)
+{
+  mFile->addAccount(account);
+  setAccount(mFile->accounts());
 }
 
 void KMoneyThingAccountsView::setFile(KMoneyThingFile *file)
@@ -148,19 +161,19 @@ void KMoneyThingAccountsView::setAccount(Q_UINT32 id)
     mDescription->setEnabled(true);
     mDescription->setText(mAccount->description());
     mRemove->setEnabled(true);
-    switch (mAccount->type())
-      case "cash":
+    if (mAccount->type() == "cash")
+    {
         mInstitutionLabel->setEnabled(false);
         mInstitution->setEnabled(false);
         mInstitution->setText("");
         mNumberLabel->setEnabled(true);
         mNumber->setEnabled(false);
         mNumber->setText("");
-        break;
-      default:
-        KMessageBox::error(this, i18n("Unknown account type: %1").arg(mAccount->type()));
     }
+    else
+        KMessageBox::error(this, i18n("Unknown account type: %1").arg(mAccount->type()));
   }
+
 }
 
 void KMoneyThingAccountsView::slotUnimplemented()

@@ -41,7 +41,9 @@ int main(int argc, char **argv)
 {
     KAboutData about("kmoneything", I18N_NOOP("KMoneyThing"), version, description,
                      KAboutData::License_GPL, "(c) 2004 Fred Emmott", 0, "http://kmoneything.fredemmott.co.uk", "mail@fredemmott.co.uk");
-    about.addAuthor( "Fred Emmott", "Lead Developer", "mail@fredemmott.co.uk", "http://www.fredemmott.co.uk" );
+    about.addAuthor( "Fred Emmott", I18N_NOOP("Lead developer"), "mail@fredemmott.co.uk", "http://www.fredemmott.co.uk" );
+    about.addCredit( "Hans Petter Bieker", I18N_NOOP("Locale tools from KCMLocale"), "bieker@kde.org" );
+    about.addCredit( "Martijn Klingens", I18N_NOOP("Locale tools from KCMLocale"), "mklingens@yahoo.com" );
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;

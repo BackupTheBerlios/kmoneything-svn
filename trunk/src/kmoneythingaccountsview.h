@@ -25,6 +25,7 @@
 
 #include "kmoneythingfile.h"
 #include "kmoneythingaccount.h"
+#include "kmoneythingaccountwizard.h"
 
 #include <qlabel.h>
 
@@ -60,7 +61,10 @@ public:
   KMoneyThingAccountsView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *currentFile = 0);
 
   ~KMoneyThingAccountsView();
+private slots:
+  void slotAccountWizard();
 public slots:
+  void slotAddAccount(KMoneyThingAccount* account);
   void slotUnimplemented();
 signals:
   void signalRefresh();
