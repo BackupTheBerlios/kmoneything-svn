@@ -39,6 +39,8 @@ private:
   QPtrList<KMoneyThingTransaction> mTransactions;
   double mStartingBalance;
   QString mDescription;
+  QString mAccountNumber;
+  QString mInstitution;
 public:
   double balance();
   QString name();

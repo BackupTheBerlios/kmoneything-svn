@@ -91,23 +91,23 @@ void KMoneyThingAccount::setDescription(QString description)
 
 QString KMoneyThingAccount::accountNumber()
 {
-  return QString("");
+  return mAccountNumber;
 }
 
 void KMoneyThingAccount::setAccountNumber(QString number)
 {
-  number = "";  // otherwise g++ gives warning
+  mAccountNumber = number;
   return;
 }
 
 QString KMoneyThingAccount::institution()
 {
-  return QString("");
+  return mInstitution;
 }
 
 void KMoneyThingAccount::setInstitution(QString institution)
 {
-  institution = "";  // otherwise g++ gives warning
+  mInstitution = institution;
   return;
 }
 
