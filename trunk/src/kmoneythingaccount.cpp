@@ -45,37 +45,28 @@ void KMoneyThingAccount::setName(QString name)
 
 Q_UINT32 KMoneyThingAccount::transactions()
 {
-  return mTransactions.size();
+  return mTransactions.count();
 }
 
-bool KMoneyThingAccount::addTransaction(KMoneyThingTransaction transaction)
+void KMoneyThingAccount::addTransaction(KMoneyThingTransaction* transaction)
 {
-  if (transaction.accountCurrencyIn() < 0) return false;
-  if (transaction.accountCurrencyOut() < 0) return false;
-  if (transaction.transactionCurrencyIn() < 0) return false;
-  if (transaction.transactionCurrencyOut() < 0) return false;
-  
+  if (transaction == 0) return;
   mTransactions.append(transaction);
-  return true;
 }
 
-bool KMoneyThingAccount::replaceTransaction(Q_UINT32 id, KMoneyThingTransaction transaction)
+bool KMoneyThingAccount::delTransaction(Q_UINT32 id)
 {
-  if (transaction.accountCurrencyIn() < 0) return false;
-  if (transaction.accountCurrencyOut() < 0) return false;
-  if (transaction.transactionCurrencyIn() < 0) return false;
-  if (transaction.transactionCurrencyOut() < 0) return false;
-  if (id >= mTransactions.size()) return false;
-  
-  mTransactions[id] = transaction;
-  return true;
+  return mTransactions.remove(id);
 }
 
-KMoneyThingTransaction KMoneyThingAccount::getTransaction(Q_UINT32 id)
+bool KMoneyThingAccount::delTransaction(KMoneyThingTransaction* transaction)
 {
-  if (id >= mTransactions.size()) return KMoneyThingTransaction();
-  
-  return mTransactions[id];
+  return mTransactions.remove(transaction);
+}
+
+KMoneyThingTransaction* KMoneyThingAccount::getTransaction(Q_UINT32 id)
+{
+  return mTransactions.at(id);
 }
 
 double KMoneyThingAccount::startingBalance()

@@ -27,7 +27,7 @@
 
 #include <qcstring.h>
 #include <qstring.h>
-#include <qvaluevector.h>
+#include <qptrlist.h>
 
 /**
 @author Fred Emmott
@@ -36,7 +36,7 @@ class KMoneyThingAccount{
 private:
   double mBalance;
   QString mName;
-  QValueVector<KMoneyThingTransaction> mTransactions;
+  QPtrList<KMoneyThingTransaction> mTransactions;
   double mStartingBalance;
   QString mDescription;
 public:
@@ -44,10 +44,10 @@ public:
   QString name();
    void setName(QString name);
   Q_UINT32 transactions();
-  bool addTransaction(KMoneyThingTransaction transaction);
-  bool replaceTransaction(Q_UINT32 id, KMoneyThingTransaction transaction);
+  void addTransaction(KMoneyThingTransaction* transaction);
   bool delTransaction(Q_UINT32 id);
-  KMoneyThingTransaction getTransaction(Q_UINT32 id);
+  bool delTransaction(KMoneyThingTransaction* transaction);
+  KMoneyThingTransaction* getTransaction(Q_UINT32 id);
   double startingBalance();
   void setStartingBalance(double balance);
   QString description();
