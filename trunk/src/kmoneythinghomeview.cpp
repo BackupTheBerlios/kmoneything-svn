@@ -53,6 +53,8 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name)
   khtmlPart->write("</body></html>");
   khtmlPart->end();
   layout->addWidget(khtmlPart->view());
+  
+  delete locale;
 }
 
 
