@@ -27,7 +27,7 @@
 #include <klocale.h>
 
 static const char description[] =
-    I18N_NOOP("A Quicken-style finance manager for KDE");
+    I18N_NOOP("A personal finance manager for KDE");
 
 static const char version[] = "Pre-0.1: $Rev$";
 
