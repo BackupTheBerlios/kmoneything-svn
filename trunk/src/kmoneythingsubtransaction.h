@@ -23,11 +23,27 @@
 #ifndef KMONEYTHINGSUBTRANSACTION_H
 #define KMONEYTHINGSUBTRANSACTION_H
 
+#include <qstring.h>
+
 /**
 @author Fred Emmott
 */
 class KMoneyThingSubTransaction{
+private:
+  double mTransactionCurrencyIn;
+  double mTransactionCurrencyOut;
+  QString mName;
+  QString mCategory;
 public:
+  double transactionCurrencyIn();
+  void setTransactionCurrencyIn(double newVal);
+  double transactionCurrencyOut();
+  void setTransactionCurrencyOut(double newVal);
+  QString name();
+  void setName(QString newVal);
+  QString category();
+  void setCategory(QString newVal);
+  
   KMoneyThingSubTransaction();
   ~KMoneyThingSubTransaction();
 };
