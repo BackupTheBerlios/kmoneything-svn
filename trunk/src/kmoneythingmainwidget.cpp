@@ -186,7 +186,7 @@ void KMoneyThingMainWidget::slotUndoOrSave(KMoneyThingView *view)
 {
   int res = KMessageBox::warningYesNo(this, i18n(
     "There are unapplied changes in the active page.\n"
-    "Do you want to save the changes, or discard them?"), i18n("Unapplied Changes"), i18n("&Apply"), i18n("&Discard"));
+    "Do you want to apply the changes, or discard them?"), i18n("Unapplied Changes"), i18n("&Apply"), i18n("&Discard"));
   switch (res)
   {
     case KMessageBox::Yes:
