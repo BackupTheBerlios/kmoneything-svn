@@ -66,7 +66,7 @@ void KMoneyThing::setupActions()
   mOpenNewAction->plug(fileMenu);
   mOpenNewAction->plug(toolBar());
   
-  mOpenAction = KStdAction::open(this, SLOT(slotUnimplemented()), actionCollection());
+  mOpenAction = KStdAction::open(mainWidget, SLOT(slotOpen()), actionCollection());
   mOpenAction->plug(fileMenu);
   mOpenAction->plug(toolBar());
   

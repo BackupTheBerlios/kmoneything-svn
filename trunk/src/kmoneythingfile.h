@@ -27,6 +27,7 @@
 #include "kmoneythingrecurringtransaction.h"
 
 #include <qptrlist.h>
+#include <qstringlist.h>
 #include <qcstring.h>
 #include <qstring.h>
 #include <klocale.h>
@@ -37,25 +38,26 @@
 class KMoneyThingFile{
 private:
   QPtrList<KMoneyThingAccount> mAccounts;
-  KLocale* mLocale;
+  QString mLocale;
   QString mName;
-  QPtrList<QString> mCategories;
+  QStringList mCategories;
   QPtrList<KMoneyThingRecurringTransaction> mRecurrences;
 public:
+  void clear();
   Q_UINT32 accounts();
   void addAccount(KMoneyThingAccount* account);
   bool delAccount(Q_UINT32 id);
   bool delAccount(KMoneyThingAccount* account);
   KMoneyThingAccount* getAccount(Q_UINT32 id);
-  KLocale* locale();
-  void setLocale(KLocale* locale);
+  QString locale();
+  void setLocale(const QString &locale);
   QString name();
   void setName(QString name);
   Q_UINT32 categories();
-  void addCategory(QString* category);
+  void addCategory(QString category);
   bool delCategory(Q_UINT32 id);
-  bool delCategory(QString* category);
-  QString* getCategory(Q_UINT32 id);
+  bool delCategory(QString category);
+  QString getCategory(Q_UINT32 id);
   Q_UINT32 recurrences();
   void addRecurrence(KMoneyThingRecurringTransaction* transaction);
   bool delRecurrence(Q_UINT32 id);
@@ -63,10 +65,10 @@ public:
   KMoneyThingRecurringTransaction* getRecurrence(Q_UINT32 id);
   
   QByteArray dump();
-  void loadDump(QByteArray savedData);
+  void loadDump(const QByteArray &savedData);
 
   KMoneyThingFile();
-  KMoneyThingFile(QByteArray *savedData);
+  KMoneyThingFile(const QByteArray &savedData);
 
   ~KMoneyThingFile();
 };

@@ -33,6 +33,11 @@ double KMoneyThingAccount::balance()
   return mBalance;
 }
 
+void KMoneyThingAccount::setBalance(double balance)
+{
+  mBalance = balance;
+}
+
 QString KMoneyThingAccount::name()
 {
   return mName;

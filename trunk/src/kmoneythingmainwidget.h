@@ -63,6 +63,9 @@ public:
   ~KMoneyThingMainWidget();
 public slots:
   void slotSave();
+  void slotOpen();
+signals:
+  void signalRefresh();
 };
 
 #endif

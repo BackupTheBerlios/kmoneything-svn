@@ -32,6 +32,7 @@
 KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *name, KMoneyThingFile *currentFile)
  : QWidget(parent, name)
 {
+  // TODO: enable apply button when appropriate
   QHBoxLayout *hbox;
   QFrame *seperator;
   
@@ -91,7 +92,7 @@ KMoneyThingAccountsView::KMoneyThingAccountsView(QWidget *parent, const char *na
   hbox->add(mApply);
   
   mRemove = new KPushButton(SmallIconSet("fileclose"), i18n("&Remove"), this);
-  connect(mRemove, SIGNAL(clicked()), this, SLOT(slotUnimplemented()));
+  connect(mRemove, SIGNAL(clicked()), this, SLOT(slotRemoveSelectedAccount()));
   hbox->add(mRemove);
   
   setFile(currentFile);
@@ -169,7 +170,7 @@ void KMoneyThingAccountsView::setAccount(Q_UINT32 id)
         mInstitutionLabel->setEnabled(false);
         mInstitution->setEnabled(false);
         mInstitution->setText("");
-        mNumberLabel->setEnabled(true);
+        mNumberLabel->setEnabled(false);
         mNumber->setEnabled(false);
         mNumber->setText("");
     }
@@ -177,6 +178,23 @@ void KMoneyThingAccountsView::setAccount(Q_UINT32 id)
         KMessageBox::error(this, i18n("Unknown account type: %1").arg(mAccount->type()));
   }
 
+}
+
+void KMoneyThingAccountsView::slotRemoveSelectedAccount()
+{
+  int RetVal = KMessageBox::warningYesNo(this, i18n("Are you sure you want to delete the account?"));
+  if (RetVal == KMessageBox::Yes)
+  {
+// TODO: check referenced transactions
+    delete mFile->getAccount(mAccountCombo->currentItem());
+    mFile->delAccount(mAccountCombo->currentItem());
+    setFile(mFile);
+  }
+}
+
+void KMoneyThingAccountsView::slotRefresh()
+{
+  setFile(mFile);
 }
 
 void KMoneyThingAccountsView::slotUnimplemented()

@@ -25,6 +25,7 @@
 #include <qlayout.h>
 #include <qfile.h>
 #include <qcstring.h>
+#include <qlayout.h>
 
 #include <kmessagebox.h>
 #include <kiconloader.h>
@@ -45,11 +46,13 @@ void KMoneyThingMainWidget::setupPages()
   layout = new QVBoxLayout(homeFrame);
   homeView = new KMoneyThingHomeView(homeFrame, 0, mCurrentFile);
   layout->addWidget(homeView);
+  connect(this, SIGNAL(signalRefresh()), homeView, SLOT(slotRefresh()));
   
   accountsFrame = addPage(i18n("Accounts"), i18n("Accounts"), DesktopIcon("identity"));
   layout = new QVBoxLayout(accountsFrame);
   accountsView = new KMoneyThingAccountsView(accountsFrame, 0, mCurrentFile);
   layout->addWidget(accountsView);
+  connect(this, SIGNAL(signalRefresh()), accountsView, SLOT(slotRefresh()));
   
   calendarFrame = addPage(i18n("Schedule"), i18n("Schedule"), DesktopIcon("today"));
   categoriesFrame = addPage(i18n("Categories"), i18n("Categories"), DesktopIcon("folder"));
@@ -86,13 +89,36 @@ void KMoneyThingMainWidget::slotSave()
 {
   // TODO: Write this properly
   QByteArray dump = qCompress(mCurrentFile->dump());
-  QFile file("/tmp/foo2");
+  QFile file("/tmp/foo");
   file.open(IO_WriteOnly);
-  file.writeBlock(dump.data(), dump.size());
+  QDataStream stream(&file);
+  stream << (QString) "KMoneyThingFile" << dump;
   file.close();
-  KMessageBox::information(0, "Written to /tmp/foo2");
+  KMessageBox::information(this, "Written to /tmp/foo");
 }
 
+void KMoneyThingMainWidget::slotOpen()
+{
+  //TODO: Write this properly
+  QByteArray dump;
+  QString temp;
+  QFile file("/tmp/foo");
+  file.open(IO_ReadOnly);
+  QDataStream stream(&file);
+  
+  stream >> temp;
+  if (temp != "KMoneyThingFile")
+  {
+    KMessageBox::error(this, i18n("Unknown file format: %1").arg(temp));
+    return;
+  }
+  stream >> dump;
+  file.close();
+  mCurrentFile->loadDump(qUncompress(dump));
+  KMessageBox::information(this, "Loaded from /tmp/foo");
+  
+  emit signalRefresh();
+}
 KMoneyThingMainWidget::~KMoneyThingMainWidget()
 {
 }

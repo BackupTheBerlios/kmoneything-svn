@@ -44,6 +44,7 @@ private:
   QString mLocale;
 public:
   double balance();
+  void setBalance(double balance);
   QString name();
    void setName(QString name);
   Q_UINT32 transactions();

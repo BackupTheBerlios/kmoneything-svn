@@ -65,6 +65,8 @@ private slots:
   void slotAccountWizard();
 public slots:
   void slotAddAccount(KMoneyThingAccount* account);
+  void slotRemoveSelectedAccount();
+  void slotRefresh();
   void slotUnimplemented();
 signals:
   void signalRefresh();

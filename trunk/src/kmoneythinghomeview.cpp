@@ -22,7 +22,6 @@
  
 #include "kmoneythinghomeview.h"
 
-#include <qlayout.h>
 #include <qstring.h>
 
 #include <khtml_part.h>
@@ -35,11 +34,17 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name, KMon
   currentFile == 0
     ? mCurrentFile = new KMoneyThingFile
     : mCurrentFile = currentFile;
-  
+    
+  layout = new QHBoxLayout(this);
+  khtmlPart = new KHTMLPart(this);
+  layout->addWidget(khtmlPart->view());
+  doHTML();
+}
+
+void KMoneyThingHomeView::doHTML()
+{
   KLocale *locale = new KLocale("KMoneyThing");  
 
-  QHBoxLayout *layout = new QHBoxLayout(this);
-  khtmlPart = new KHTMLPart(this);
   khtmlPart->begin();
   khtmlPart->write("<html>");
   khtmlPart->write("<head><style type='text/css'>th, tr { text-align: left; padding-right: 1em }</style></head>");
@@ -51,6 +56,7 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name, KMon
   khtmlPart->write("<h2>" + i18n("Summary") + "</h2>");
   khtmlPart->write("<table>");
   khtmlPart->write("<tr><th>" + i18n("Account") + "</th><th>" + i18n("Balance") + "</th></tr>");
+  // TODO: International accounts
   for (Q_UINT32 i = 0; i < mCurrentFile->accounts(); i++)
   {
     QString accountName = mCurrentFile->getAccount(i)->name();
@@ -62,11 +68,14 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name, KMon
   khtmlPart->write("</table>");
   khtmlPart->write("</body></html>");
   khtmlPart->end();
-  layout->addWidget(khtmlPart->view());
   
   delete locale;
 }
 
+void KMoneyThingHomeView::slotRefresh()
+{
+  doHTML();
+}
 
 KMoneyThingHomeView::~KMoneyThingHomeView()
 {
