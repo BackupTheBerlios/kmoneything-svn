@@ -29,11 +29,10 @@
 KMoneyThingCategoriesView::KMoneyThingCategoriesView(QWidget *parent, const char *name, KMoneyThingFile *file)
  : KMoneyThingView(parent, name, file)
 {
-  setFile(file);
-  
   QVBoxLayout *layout = new QVBoxLayout(this, 3);
   mCategories = new KEditListBox(this,0,0,3);
   layout->addWidget(mCategories);
+  connect(mCategories, SIGNAL(changed()), this, SLOT(someThingChanged()));
   
   QHBoxLayout *bottomLayout = new QHBoxLayout(this, 2);
   layout->addItem(bottomLayout);
@@ -44,8 +43,45 @@ KMoneyThingCategoriesView::KMoneyThingCategoriesView(QWidget *parent, const char
   mApply = new KPushButton(SmallIconSet("ok"), i18n("&Apply"), this);
   connect(mApply, SIGNAL(clicked()), this, SLOT(slotApply()));
   bottomLayout->add(mApply);
+
+  setFile(file);  
 }
 
+void KMoneyThingCategoriesView::setFile(KMoneyThingFile *file)
+{
+  mFile = file;
+  slotRefresh();
+}
+
+void KMoneyThingCategoriesView::slotRefresh()
+{
+  mCategories->clear();
+  mCategories->insertStringList(mFile->getCategories());
+  mApply->setEnabled(false);
+}
+
+void KMoneyThingCategoriesView::someThingChanged()
+{
+  mApply->setEnabled(true);
+}
+
+void KMoneyThingCategoriesView::slotApply()
+{
+  mFile->setCategories(mCategories->items());
+  mApply->setEnabled(false);
+}
+
+void KMoneyThingCategoriesView::hideEvent(QHideEvent *event)
+{
+  if (mApply->isEnabled())
+    emit undoOrSave(this);
+  QWidget::hideEvent(event);
+}
+
+void KMoneyThingCategoriesView::undoChanges()
+{
+  slotRefresh();
+}
 
 KMoneyThingCategoriesView::~KMoneyThingCategoriesView()
 {
