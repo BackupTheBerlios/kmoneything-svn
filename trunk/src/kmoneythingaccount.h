@@ -35,19 +35,19 @@ class KMoneyThingAccount{
 public:
   virtual double balance();
   virtual QString name();
-  virtual void setName(QString);
+  virtual void setName(QString name);
   virtual Q_UINT32 transactions();
-  virtual bool addTransaction(KMoneyThingTransaction);
-  virtual bool replaceTransaction(Q_UINT32, KMoneyThingTransaction);
-  virtual bool delTransaction(Q_UINT32);
-  virtual KMoneyThingTransaction getTransaction(Q_UINT32);
+  virtual bool addTransaction(KMoneyThingTransaction transaction);
+  virtual bool replaceTransaction(Q_UINT32 id, KMoneyThingTransaction transaction);
+  virtual bool delTransaction(Q_UINT32 id);
+  virtual KMoneyThingTransaction getTransaction(Q_UINT32 id);
   virtual double startingBalance();
-  virtual bool setStartingBalance(double);
+  virtual bool setStartingBalance(double balanace);
   virtual QString description();
-  virtual void setDescription(QString);
+  virtual void setDescription(QString description);
   virtual QString type();
   virtual QString accountNumber();  // eg account number and sort code
-  virtual void setAccountNumber(QString);
+  virtual void setAccountNumber(QString number);
   virtual QString accountDescription();  // eg Fred's Barclays Account
   virtual void setAccountDescription();
 
