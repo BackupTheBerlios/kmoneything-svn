@@ -149,6 +149,7 @@ void KMoneyThingAccountWizard::localeChanged(const QString &id)
   KLocale locale("KMyMoney");
   locale.setCountry(id);
   mStartingBalance->setPrefix(locale.currencySymbol());
+  mStartingBalance->setPrecision(locale.fracDigits());
 }
 
 void KMoneyThingAccountWizard::pageChanged(const QString &title)
