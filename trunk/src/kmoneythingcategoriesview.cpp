@@ -78,11 +78,6 @@ void KMoneyThingCategoriesView::hideEvent(QHideEvent *event)
   QWidget::hideEvent(event);
 }
 
-void KMoneyThingCategoriesView::undoChanges()
-{
-  slotRefresh();
-}
-
 KMoneyThingCategoriesView::~KMoneyThingCategoriesView()
 {
 }

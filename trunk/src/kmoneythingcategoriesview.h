@@ -43,7 +43,7 @@ private:
   KEditListBox *mCategories;
 public:
   virtual void setFile(KMoneyThingFile* file);
-  virtual void undoChanges();
+  virtual void undoChanges(){ slotRefresh(); };
   virtual void saveChanges(){ slotApply(); };
   KMoneyThingCategoriesView(QWidget *parent = 0, const char *name = 0, KMoneyThingFile *file = 0);
 
