@@ -23,6 +23,7 @@
 #include "kmoneythingaccountwizard.h"
 
 #include <qlabel.h>
+#include <qhbox.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -72,19 +73,46 @@ void KMoneyThingAccountWizard::setupStandardInfoPage()
   mLocale = new KLanguageButton(standardInfoPage);
   label->setBuddy(mLocale);
   KMoneyThingUtils::loadCountryList(mLocale);
-  mLocale->setCurrentItem(KGlobal::locale()->country());
+  mLocale->setCurrentItem(KGlobal::locale()->country()); // TODO: make a slot to call mStartingBalance->set{Prefix|Precision}();
   
   addPage(standardInfoPage, i18n("Basic Information"));
-  setNextEnabled(standardInfoPage, true); // TODO: can't advance until account name is checked
+  setNextEnabled(standardInfoPage, false); // TODO: can't advance until account name is checked to != "" and to be unique
   setHelpEnabled(standardInfoPage, false);
 }
 
 void KMoneyThingAccountWizard::setupExtendedInfoPage()
 {
+  QLabel *label;
+  
+  extendedInfoPage = new QGrid(2, this);
+  
+  label = new QLabel(i18n("&Starting Balance: "), extendedInfoPage);
+  mStartingBalance = new KDoubleNumInput(extendedInfoPage);
+  label->setBuddy(mStartingBalance);
+  
+  label = new QLabel(i18n("&Institution: "), extendedInfoPage);
+  mInstitution = new KLineEdit(extendedInfoPage);
+  label->setBuddy(mInstitution);
+  
+  label = new QLabel(i18n("A&ccount Number: "), extendedInfoPage);
+  mAccountNumber = new KLineEdit(extendedInfoPage);
+  label->setBuddy(mAccountNumber);
+  
+  addPage(extendedInfoPage, i18n("Extended Information"));
+  setNextEnabled(extendedInfoPage, true);
+  setHelpEnabled(extendedInfoPage, false);
 }
 
 void KMoneyThingAccountWizard::setupFinishedPage()
 {
+  finishedPage = new QVBox(this);
+  
+  new QLabel(i18n("Congratulations!\n\nKMyMoneyThing now has all the information needed to create your account.\n"
+    "Click 'Finish' to create your account."), finishedPage);
+  
+  addPage(finishedPage, i18n("Finished!"));
+  setFinishEnabled(finishedPage, true);
+  setHelpEnabled(finishedPage, false);
 }
 
 KMoneyThingAccountWizard::~KMoneyThingAccountWizard()

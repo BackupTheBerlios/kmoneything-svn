@@ -38,6 +38,7 @@
 #include <klineedit.h>
 #include <ktextedit.h>
 #include <kcombobox.h>
+#include <knuminput.h>
 
 /**
 @author Fred Emmott
@@ -48,7 +49,7 @@ Q_OBJECT
 private:
   QVBox* welcomePage;
   QGrid* standardInfoPage;
-  QGrid* extendendInfoPage;
+  QGrid* extendedInfoPage;
   QVBox* finishedPage;
   
   // standard info
@@ -58,7 +59,7 @@ private:
   KLanguageButton *mLocale;
   
   // extended info
-  KLineEdit *mStartingBalance;
+  KDoubleNumInput *mStartingBalance;
   KLineEdit *mInstitution;
   KLineEdit *mAccountNumber;
   
