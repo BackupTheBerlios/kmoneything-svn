@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
+// $Id$
+ 
 #include "kmoneythinghomeview.h"
 
 #include <qlayout.h>
@@ -30,7 +33,13 @@ KMoneyThingHomeView::KMoneyThingHomeView(QWidget *parent, const char *name)
 {
   QHBoxLayout *layout = new QHBoxLayout(this);
   khtmlPart = new KHTMLPart(this);
-  khtmlPart->openURL("https://laptop.fredemmott.co.uk");
+  khtmlPart->begin();
+  khtmlPart->write("<html><body><h1>");
+  khtmlPart->write(i18n("Welcome to KMoneyThing") + " pre0.1: $Rev$");
+  khtmlPart->write("</h1><hr><p>");
+  khtmlPart->write(i18n("This application is still under development, and is not yet suitable for general use."));
+  khtmlPart->write("</p></body></html>");
+  khtmlPart->end();
   layout->addWidget(khtmlPart->view());
 }
 
