@@ -18,9 +18,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+// $Id$
+ 
 #include "kmoneything.h"
-
-#include <qlabel.h>
 
 #include <kmainwindow.h>
 #include <klocale.h>
@@ -28,10 +28,7 @@
 KMoneyThing::KMoneyThing()
     : KMainWindow( 0, "KMoneyThing" )
 {
-    // set the shell's ui resource file
-    setXMLFile("kmoneythingui.rc");
 
-    new QLabel( "Hello World", this, "hello label" );
 }
 
 KMoneyThing::~KMoneyThing()
