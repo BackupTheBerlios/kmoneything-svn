@@ -62,7 +62,7 @@ public:
   void addRecurrence(KMoneyThingRecurringTransaction* transaction);
   bool delRecurrence(Q_UINT32 id);
   bool delRecurrence(KMoneyThingRecurringTransaction* transaction);
-  KMoneyThingRecurringTransaction* getTransaction(Q_UINT32 id);
+  KMoneyThingRecurringTransaction* getRecurrence(Q_UINT32 id);
   
   QByteArray dump();
   void loadDump(QByteArray savedData);
