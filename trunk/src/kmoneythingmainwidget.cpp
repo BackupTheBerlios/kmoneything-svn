@@ -115,7 +115,7 @@ void KMoneyThingMainWidget::slotSave()
     fileName = temp.name();
   }
   
-  setStatus(i18n("Saving file..."));
+  emit(setStatus(i18n("Saving file...")));
   QByteArray dump = qCompress(mCurrentFile->dump());
   QFile file(fileName);
   file.open(IO_WriteOnly);
@@ -125,14 +125,14 @@ void KMoneyThingMainWidget::slotSave()
   
   if (!mCurrentFile->kurl().isLocalFile())
   {
-    setStatus(i18n("Uploading file..."));
+    emit(setStatus(i18n("Uploading file...")));
     if (!KIO::NetAccess::upload(fileName, mCurrentFile->kurl(), this))
       KMessageBox::error(this, i18n("Failed to upload file."));
   }
   
   temp.unlink();
   
-  setStatus(i18n("Ready."));
+  emit(setStatus(i18n("Ready.")));
 }
 
 void KMoneyThingMainWidget::slotSaveAs()
@@ -152,10 +152,10 @@ void KMoneyThingMainWidget::slotOpen()
     return;
   mCurrentFile->setKurl(kurl);
 
-  setStatus(i18n("Downloading file..."));
+  emit(setStatus(i18n("Downloading file...")));
   KIO::NetAccess::download(kurl, fileName, this);
   
-  setStatus(i18n("Reading file..."));
+  emit(setStatus(i18n("Reading file...")));
   QByteArray dump;
   QString temp;
   QFile file(fileName);
@@ -168,16 +168,16 @@ void KMoneyThingMainWidget::slotOpen()
     KMessageBox::error(this, i18n("Unknown file format: %1").arg(temp));
     file.close();
     KIO::NetAccess::removeTempFile(fileName);
-    setStatus(i18n("Ready."));
+    emit(setStatus(i18n("Ready.")));
     return;
   }
   stream >> dump;
   file.close();
   KIO::NetAccess::removeTempFile(fileName);
   
-  setStatus(i18n("Parsing file..."));
+  emit(setStatus(i18n("Parsing file...")));
   mCurrentFile->loadDump(qUncompress(dump));
-  setStatus(i18n("Ready."));
+  emit(setStatus(i18n("Ready.")));
   
   emit signalRefresh();
 }
