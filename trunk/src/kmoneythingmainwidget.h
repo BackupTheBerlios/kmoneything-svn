@@ -62,9 +62,11 @@ public:
 
   ~KMoneyThingMainWidget();
 public slots:
-  void slotSave();
   void slotOpen();
+  void slotSave();
+  void slotSaveAs();
 signals:
+  void setStatus(const QString &status);
   void signalRefresh();
 };
 

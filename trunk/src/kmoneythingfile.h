@@ -30,6 +30,8 @@
 #include <qstringlist.h>
 #include <qcstring.h>
 #include <qstring.h>
+
+#include <kurl.h>
 #include <klocale.h>
 
 /**
@@ -42,6 +44,8 @@ private:
   QString mName;
   QStringList mCategories;
   QPtrList<KMoneyThingRecurringTransaction> mRecurrences;
+  
+  KURL mKurl;
 public:
   void clear();
   Q_UINT32 accounts();
@@ -63,6 +67,9 @@ public:
   bool delRecurrence(Q_UINT32 id);
   bool delRecurrence(KMoneyThingRecurringTransaction* transaction);
   KMoneyThingRecurringTransaction* getRecurrence(Q_UINT32 id);
+  
+  KURL kurl();
+  void setKurl(const KURL &kurl);
   
   QByteArray dump();
   void loadDump(const QByteArray &savedData);

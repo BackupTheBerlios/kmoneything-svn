@@ -63,6 +63,7 @@ public:
 public slots:
   void slotSearch();
   void slotUnimplemented();
+  void slotSetStatus(const QString &status);
 };
 
 #endif // _KMONEYTHING_H_

@@ -41,6 +41,7 @@ KMoneyThing::KMoneyThing()
   setAutoSaveSettings();
   
   mainWidget = new KMoneyThingMainWidget(this);
+  connect(mainWidget, SIGNAL(setStatus(const QString& )), this, SLOT(slotSetStatus(const QString& )));
   setCentralWidget(mainWidget);
   
   setupActions();
@@ -79,7 +80,7 @@ void KMoneyThing::setupActions()
   mSaveAction->plug(fileMenu);
   mSaveAction->plug(toolBar());
   
-  mSaveAsAction = KStdAction::saveAs(this, SLOT(slotUnimplemented()), actionCollection());
+  mSaveAsAction = KStdAction::saveAs(mainWidget, SLOT(slotSaveAs()), actionCollection());
   mSaveAsAction->plug(fileMenu);
   mSaveAsAction->plug(toolBar());
   
@@ -100,6 +101,11 @@ void KMoneyThing::setupActions()
   menuBar()->insertItem(i18n("&Help"), help);
   
   KStdAction::find(this, SLOT(slotSearch()), actionCollection())->plug(toolBar());
+}
+
+void KMoneyThing::slotSetStatus(const QString &status)
+{
+  statusBar()->message(status);
 }
 
 KMoneyThing::~KMoneyThing()

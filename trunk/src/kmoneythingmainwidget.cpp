@@ -26,10 +26,15 @@
 #include <qfile.h>
 #include <qcstring.h>
 #include <qlayout.h>
+#include <qstring.h>
 
+#include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <kurl.h>
+#include <ktempfile.h>
+#include <kio/netaccess.h>
 
 KMoneyThingMainWidget::KMoneyThingMainWidget(QWidget *parent, const char *name, int face)
  : KJanusWidget(parent, name, face)
@@ -87,14 +92,45 @@ void KMoneyThingMainWidget::activatePage(KMoneyThingMainWidget::Page page)
 
 void KMoneyThingMainWidget::slotSave()
 {
-  // TODO: Write this properly
+  QString fileName = mCurrentFile->kurl().path();
+  
+  if (fileName == "")
+  {
+    slotSaveAs();
+    return;
+  }
+  
+  if (!mCurrentFile->kurl().isLocalFile())
+  {
+    KTempFile temp;
+    fileName = temp.name();
+  }
+  
+  setStatus(i18n("Saving file..."));
   QByteArray dump = mCurrentFile->dump();
-  QFile file("/tmp/foo");
+  QFile file(fileName);
   file.open(IO_WriteOnly);
   QDataStream stream(&file);
   stream << (QString) "KMoneyThingFile" << dump;
   file.close();
-  KMessageBox::information(this, "Written to /tmp/foo");
+  
+  if (!mCurrentFile->kurl().isLocalFile())
+  {
+    setStatus(i18n("Uploading..."));
+    if (!KIO::NetAccess::upload(fileName, mCurrentFile->kurl(), this))
+      KMessageBox::error(this, i18n("Failed to upload file."));
+  }
+  
+  setStatus(i18n("Ready."));
+}
+
+void KMoneyThingMainWidget::slotSaveAs()
+{
+  KURL kurl = KFileDialog::getSaveURL(0, i18n("*.kmt|KMoneyThing files (*.kmt)"), this);
+  if (kurl.path() == "")
+    return;
+  mCurrentFile->setKurl(kurl);
+  slotSave();
 }
 
 void KMoneyThingMainWidget::slotOpen()

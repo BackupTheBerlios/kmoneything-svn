@@ -236,14 +236,14 @@ QByteArray KMoneyThingFile::dump()
   }
   
   stream.device()->close();
-  return output;
+  return qCompress(output);
 }
 
 void KMoneyThingFile::loadDump(const QByteArray &savedData)
 {
   QString temp1, temp2, temp3, temp4, temp5;
   double dTemp;
-  QDataStream stream(savedData, IO_ReadOnly);
+  QDataStream stream(qUncompress(savedData), IO_ReadOnly);
   
   stream >> temp1 >> temp2;
   
@@ -968,6 +968,16 @@ KMoneyThingFile::KMoneyThingFile(const QByteArray &savedData)
 {
   KMoneyThingFile();
   loadDump(savedData);
+}
+
+KURL KMoneyThingFile::kurl()
+{
+  return mKurl;
+}
+
+void KMoneyThingFile::setKurl(const KURL &kurl)
+{
+  mKurl = kurl;
 }
 
 KMoneyThingFile::~KMoneyThingFile()
